@@ -1,0 +1,7 @@
+server:
+  port: 20002
+spring:
+  application:
+    name: im-client
+  profiles:
+    active: dev

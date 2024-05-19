@@ -1,0 +1,7 @@
+server:
+  port: 20000
+spring:
+  application:
+    name: im-user
+  profiles:
+    active: dev

@@ -1,0 +1,92 @@
+spring:
+  # 数据库
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:3306/im_table?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #redis
+  cache:
+    type: redis
+  data:
+    redis:
+      database: ${REDIS_DATABASE}
+      port: 6379
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASSWORD}
+
+  kafka:
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID}
+      auto-offset-reset: earliest
+      bootstrap-servers: ${KAFKA_CONSUMER_BOOTSTRAP_SERVER}
+      enable-auto-commit: false #关闭自动提交，收到提交offset
+    producer:
+      bootstrap-servers: ${KAFKA_PRODUCER_BOOTSTRAP_SERVER}
+      key-serializer: ${KAFKA_PRODUCER_KEY_SERIALIZER}
+      value-serializer: ${KAFKA_PRODUCER_VALUE_SERIALIZER}
+      properties:
+        spring.json.type.mapping: baseMsgBo:com.vanky.chat.common.bo.BaseMsgBo
+
+  # rabbitMQ
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    virtual-host: /
+    port: 5672
+    # 发送端消息抵达队列确认
+    publisher-returns: true
+    template:
+      # 只要抵达队列，以异步发送优先回调returns
+      mandatory: true
+    # 发送端消息抵达服务器确认
+    publisher-confirm-type: correlated
+    listener:
+      simple:
+        # 消息手动接收
+        acknowledge-mode: manual
+
+#canal-monitor-mysql:
+#  hostname: 192.168.200.134
+#  port: 11111
+#  tableName: im_table
+
+#canal:
+#  server: 192.168.200.134:11111
+#  destination: redis
+#
+#logging:
+#  level:
+#    top.javatool.canal.client: warn
+
+netty-server:
+  port: 20003
+
+# 线程池
+chat:
+  thread:
+    core-size: ${COMMUNITY_THREAD_CORE_SIZE}
+    max-size: ${COMMUNITY_THREAD_MAX_SIZE}
+    keep-alive-time: ${COMMUNITY_THREAD_KEEP_ALIVE_TIME}
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.vanky.chat

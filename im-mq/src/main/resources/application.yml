@@ -1,0 +1,7 @@
+server:
+  port: 20005
+spring:
+  application:
+    name: im-mq
+  profiles:
+    active: dev

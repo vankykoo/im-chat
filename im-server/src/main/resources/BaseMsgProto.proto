@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+//生成 proto 文件所在包路径
+package com.vanky.chat.common.protobuf;
+
+//生成 proto 文件所在包路径
+option java_package = "com.vanky.chat.common.protobuf";
+
+//生成 proto 文件名
+option java_outer_classname="BaseMsgProto";
+
+message BaseMsg{
+  int64 id = 1;
+  int64 unique_id = 2;
+  int64 from_user_id = 3;
+  int64 to_user_id = 4;
+  int64 create_time = 5;
+  int32 chat_type = 6;
+  bytes content = 7;
+  int32 msg_type = 8;
+  int32 status = 9;
+}

@@ -1,0 +1,7 @@
+server:
+  port: 20090
+spring:
+  application:
+    name: im-file
+  profiles:
+    active: dev

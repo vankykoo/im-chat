@@ -1,0 +1,40 @@
+spring:
+  # 数据库
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:3306/im_table?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #redis
+  cache:
+    type: redis
+  data:
+    redis:
+      database: ${REDIS_DATABASE}
+      port: 6379
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASSWORD}
+
+im:
+  token-secret: ${IM_TOKEN_SECRET}
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.vanky.chat

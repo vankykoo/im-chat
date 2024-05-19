@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vanky.chat.server.mapper.OfflineMsgMapper">
+
+    <delete id="deleteByUniqueId">
+        delete from offline_msg
+        where unique_id in
+        <foreach collection="uniqueIds" item="uniqueId" open="(" close=")" separator=",">
+            #{uniqueId}
+        </foreach>
+    </delete>
+
+    <select id="getUserIdWhoSendNewMsg" parameterType="list" resultType="java.lang.Long">
+        select from_user_id from offline_msg where to_user_id = #{userId} group by from_user_id
+    </select>
+
+    <select id="getOfflineMsgCountOfOne" resultType="java.lang.Integer">
+        select count(*) from offline_msg
+                        where from_user_id = #{fromUserId} and to_user_id = #{toUserId}
+    </select>
+
+    <select id="getLastOfflineMsgOfOne" resultType="com.vanky.chat.server.pojo.OfflineMsg">
+        select * from offline_msg
+        where from_user_id = #{fromUserId} and to_user_id = #{toUserId}
+        order by create_time desc limit 1;
+    </select>
+
+    <select id="getFirstOfflineMsgOfOne" resultType="com.vanky.chat.server.pojo.OfflineMsg">
+        select * from offline_msg
+        where from_user_id = #{fromUserId} and to_user_id = #{toUserId}
+        order by create_time asc limit 1;
+    </select>
+
+    <select id="selectAllOfflineMsgByInfo" parameterType="list" resultType="com.vanky.chat.common.bo.OfflineMsgDetailBo">
+        SELECT base_msg.id, base_msg.unique_id, base_msg.create_time, base_msg.content
+        FROM base_msg JOIN offline_msg
+        ON      offline_msg.from_user_id = #{fromUserId}
+               AND offline_msg.to_user_id = #{toUserId}
+               AND base_msg.unique_id = offline_msg.unique_id
+        ORDER BY unique_id ASC
+        limit 100;
+    </select>
+</mapper>

@@ -1,0 +1,84 @@
+spring:
+  # 数据库
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:3306/im_table?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  security:
+    oauth2:
+      client:
+        registration:
+          gitee:
+            client-id: ${GITEE_CLIENT_ID}
+            client-secret: ${GITEE_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: ${GITEE_REDIRECT_URI}
+            scope:
+              - user_info
+        provider:
+          gitee:
+            authorization-uri: https://gitee.com/oauth/authorize
+            token-uri: https://gitee.com/oauth/token
+            user-info-uri: https://gitee.com/api/v5/user
+            user-name-attribute: name
+
+  #redis
+  cache:
+    type: redis
+  data:
+    redis:
+      database: ${REDIS_DATABASE}
+      port: 6379
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASSWORD}
+
+  # rabbitMQ
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    virtual-host: /
+    port: 5672
+    # 发送端消息抵达队列确认
+    publisher-returns: true
+    template:
+      # 只要抵达队列，以异步发送优先回调returns
+      mandatory: true
+    # 发送端消息抵达服务器确认
+    publisher-confirm-type: correlated
+    listener:
+      simple:
+        # 消息手动接收
+        acknowledge-mode: manual
+
+im:
+  token-secret: ${IM_TOKEN_SECRET}
+
+# 线程池
+#chat:
+#  thread:
+#    core-size: ${COMMUNITY_THREAD_CORE_SIZE}
+#    max-size: ${COMMUNITY_THREAD_MAX_SIZE}
+#    keep-alive-time: ${COMMUNITY_THREAD_KEEP_ALIVE_TIME}
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.vanky.chat

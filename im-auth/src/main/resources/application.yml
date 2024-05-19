@@ -1,0 +1,7 @@
+server:
+  port: 20007
+spring:
+  application:
+    name: im-auth
+  profiles:
+    active: dev

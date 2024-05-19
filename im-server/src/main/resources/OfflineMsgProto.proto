@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+//生成 proto 文件所在包路径
+package com.vanky.chat.common.protobuf;
+
+//生成 proto 文件所在包路径
+option java_package = "com.vanky.chat.common.protobuf";
+
+//生成 proto 文件名
+option java_outer_classname="OfflineMsgProto";
+
+message OfflineMsg{
+  int64 from_user_id = 1;   //发送方id
+  int64 goto_timestamp = 2; //第一条消息发送时间
+  int64 last_timestamp = 3; //最后一条消息发送时间
+  uint32 msg_count = 4;     //消息条数
+  string last_content = 5;  //最后一条消息的内容
+  uint32 msg_type = 6;      //消息类型
+}

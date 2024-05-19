@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.vanky.chat.server.mapper.GroupMsgMapper">
+    <select id="getFirstOfflineMsg" resultType="com.vanky.chat.server.pojo.GroupMsg">
+        select * from group_msg
+        where group_id = #{groupUser.groupId} and unique_id > #{groupUser.lastAckMsgId}
+        order by id asc
+        limit 1;
+    </select>
+
+    <select id="getLastOfflineMsg" resultType="com.vanky.chat.server.pojo.GroupMsg">
+        select * from group_msg
+        where group_id = #{groupUser.groupId} and unique_id > #{groupUser.lastAckMsgId}
+        order by id desc
+        limit 1;
+    </select>
+
+    <select id="getOfflineMsgCount" resultType="java.lang.Integer">
+        select count(*) from group_msg
+        where group_id = #{groupUser.groupId} and unique_id > #{groupUser.lastAckMsgId}
+    </select>
+
+    <select id="get100GroupMsgByGroupIdAndLastAckId"
+            parameterType="list"
+            resultType="com.vanky.chat.common.bo.OfflineGroupMsgDetailBo">
+        select id, unique_id, user_id, create_time, content from group_msg
+        where group_id = #{groupId} and unique_id <![CDATA[ >= ]]> #{lastAckId}
+        order by unique_id asc
+        limit 100;
+    </select>
+
+    <select id="getLastMsgUniqueIdOfGroup" resultType="java.lang.Long">
+        select unique_id from group_msg
+        where group_id = #{groupId}
+        order by unique_id desc
+        limit 1;
+    </select>
+</mapper>

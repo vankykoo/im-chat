@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+        group: dev
+      config:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+        file-extension: yml
+        namespace: public
+        group: dev
+        extension-configs:
+          - data-id: application-im
+            group: dev
+            refresh: true

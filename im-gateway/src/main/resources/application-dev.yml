@@ -1,0 +1,89 @@
+spring:
+  # 数据库
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:3306/im_table?useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      routes:
+        - id: im-client
+          uri: lb://im-client
+          predicates:
+            - Path=/client/**
+
+        - id: im-server
+          uri: lb://im-server
+          predicates:
+            - Path=/server/**
+
+        - id: im-user
+          uri: lb://im-user
+          predicates:
+            - Path=/user/**
+
+        - id: im-leaf
+          uri: lb://im-leaf
+          predicates:
+            - Path=/id/**
+
+        - id: im-gateway
+          uri: lb://im-gateway
+          predicates:
+            - Path=/gateway/**
+
+        - id: im-auth
+          uri: lb://im-auth
+          predicates:
+            - Path=/auth/**,/oauth2/authorization/gitee
+
+      globalcors: # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决options请求被拦截问题
+        corsConfigurations:
+          '[/**]':
+            # 允许哪些网站的跨域请求
+            allowedOrigins: "*"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+            # allowCredentials: true # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+
+  #redis
+  cache:
+    type: redis
+  data:
+    redis:
+      database: ${REDIS_DATABASE}
+      port: 6379
+      host: ${REDIS_HOST}
+      password: ${REDIS_PASSWORD}
+
+im:
+  token-secret: ${IM_TOKEN_SECRET}
+  skip-paths: /auth/login, /auth/oauth/login, /auth/oauth/to_login, /auth/oauth/gitee/login, /oauth2/authorization/gitee
+
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.vanky.chat
+#logging:
+#  level:
+#    root: debug
