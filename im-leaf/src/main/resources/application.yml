@@ -2,6 +2,6 @@ server:
   port: 20090
 spring:
   application:
-    name: im-file
+    name: im-leaf
   profiles:
     active: dev

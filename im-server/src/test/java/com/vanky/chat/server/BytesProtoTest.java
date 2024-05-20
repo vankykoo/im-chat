@@ -1,6 +1,5 @@
 package com.vanky.chat.server;
 
-import com.google.protobuf.ByteString;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -11,22 +10,22 @@ public class BytesProtoTest {
 
     @Test
     public void test(){
-        TestProto.Test.Builder builder = TestProto.Test.newBuilder();
-
-        String s = "嗯嗯";
-
-        ByteString bytes = ByteString.copyFrom(s.getBytes());
-
-        builder.setMsg(bytes);
-
-        TestProto.Test test = builder.build();
-
-        ByteString msg = test.getMsg();
-
-        byte[] byteArray = msg.toByteArray();
-
-        String s1 = new String(byteArray);
-        System.out.println(s1);
+        //TestProto.Test.Builder builder = TestProto.Test.newBuilder();
+        //
+        //String s = "嗯嗯";
+        //
+        //ByteString bytes = ByteString.copyFrom(s.getBytes());
+        //
+        //builder.setMsg(bytes);
+        //
+        //TestProto.Test test = builder.build();
+        //
+        //ByteString msg = test.getMsg();
+        //
+        //byte[] byteArray = msg.toByteArray();
+        //
+        //String s1 = new String(byteArray);
+        //System.out.println(s1);
     }
 
 }

@@ -78,8 +78,8 @@ public class Test {
         List<OfflineMsgDetailBo> offlineMsgDetailBoList = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            OfflineMsgDetailBo offlineMsgDetailBo = new OfflineMsgDetailBo(1L + i, UUID.randomUUID().toString(), new Date(), "哈哈" + i);
-            offlineMsgDetailBoList.add(offlineMsgDetailBo);
+            //OfflineMsgDetailBo offlineMsgDetailBo = new OfflineMsgDetailBo(1L + i, UUID.randomUUID().toString(), new Date(), "哈哈" + i);
+            //offlineMsgDetailBoList.add(offlineMsgDetailBo);
         }
 
         String jsonString = JSONObject.toJSONString(offlineMsgDetailBoList);

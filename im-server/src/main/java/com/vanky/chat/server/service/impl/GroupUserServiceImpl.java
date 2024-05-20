@@ -3,8 +3,11 @@ package com.vanky.chat.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vanky.chat.common.bo.ImUserBo;
+import com.vanky.chat.common.cache.OnlineCache;
+import com.vanky.chat.common.cache.RedisCacheKey;
 import com.vanky.chat.common.feign.userFeign.ImUserFeignClient;
 import com.vanky.chat.common.response.Result;
+import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.mapper.GroupMsgMapper;
 import com.vanky.chat.server.pojo.GroupUser;
 import com.vanky.chat.server.service.GroupService;
@@ -97,6 +100,9 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
 
         //更新群聊人数
         groupService.updateGroupUserNumber(groupId);
+
+        //保存到群在线用户中
+        RedisUtil.sput(OnlineCache.GROUP_ONLINE_USER + groupId, userId);
     }
 }
 

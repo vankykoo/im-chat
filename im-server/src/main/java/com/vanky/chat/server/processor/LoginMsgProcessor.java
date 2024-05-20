@@ -37,6 +37,7 @@ public class LoginMsgProcessor {
 
     public void registerLoginUser(BaseMsgProto.BaseMsg msg, Channel channel){
         //1.保存到本地服务器
+        //todo 这里userBo没存好
         UserBo userBo = new UserBo();
         ChatSession chatSession = new ChatSession(channel, userBo);
         long userId = msg.getFromUserId();

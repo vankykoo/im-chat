@@ -151,11 +151,11 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx){
-        Long userId = UserChannelMap.context.get(ctx.channel().hashCode());
-
-        BaseMsgProto.BaseMsg baseMsg = msgGenerator.generateLogoutMsg(userId);
-
-        ctx.channel().writeAndFlush(baseMsg);
+        //Long userId = UserChannelMap.context.get(ctx.channel().hashCode());
+        //
+        //BaseMsgProto.BaseMsg baseMsg = msgGenerator.generateLogoutMsg(userId);
+        //
+        //ctx.channel().writeAndFlush(baseMsg);
 
         System.out.println("与服务端连接断开了 ===》 " + ctx);
         System.out.println("size = " + UserChannelMap.userChannel.size());
