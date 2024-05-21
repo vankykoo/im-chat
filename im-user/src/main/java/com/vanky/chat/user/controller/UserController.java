@@ -8,6 +8,7 @@ import com.vanky.chat.user.pojo.po.ImUser;
 import com.vanky.chat.user.pojo.po.User;
 import com.vanky.chat.user.pojo.to.UserTo;
 import com.vanky.chat.user.service.ImUserService;
+import com.vanky.chat.user.service.RelationService;
 import com.vanky.chat.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +29,7 @@ public class UserController {
 
     @Resource
     private ImUserService imUserService;
+
 
     @PostMapping("/register")
     @Operation(summary = "用户注册")
@@ -68,5 +70,7 @@ public class UserController {
 
         return Result.success(imUserBo);
     }
+
+
 
 }

@@ -38,4 +38,6 @@ public interface ImUserService extends IService<ImUser> {
      * @return
      */
     ImUser getByUserId(Long userId);
+
+
 }

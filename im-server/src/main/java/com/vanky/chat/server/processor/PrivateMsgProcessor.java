@@ -3,7 +3,11 @@ package com.vanky.chat.server.processor;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.bo.OfflineMsgInfo;
+import com.vanky.chat.common.exception.MyException;
+import com.vanky.chat.common.feign.userFeign.ImUserFeignClient;
+import com.vanky.chat.common.feign.userFeign.RelationFeignClient;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
+import com.vanky.chat.common.response.Result;
 import com.vanky.chat.server.pojo.BaseMsg;
 import com.vanky.chat.server.push.PushProxy;
 import com.vanky.chat.server.service.BaseMsgService;
@@ -32,6 +36,9 @@ public class PrivateMsgProcessor {
     private BaseMsgService baseMsgService;
 
     @Resource
+    private RelationFeignClient relationFeignClient;
+
+    @Resource
     private MsgGenerator msgGenerator;
 
     @Resource
@@ -43,6 +50,16 @@ public class PrivateMsgProcessor {
      * @param channel
      */
     public void sendPrivateMsg(BaseMsgProto.BaseMsg msg, Channel channel){
+        //判断两个用户是否为好友关系
+        Result<Boolean> result = relationFeignClient.areUsersFriends(msg.getFromUserId(), msg.getToUserId());
+        if (result == null || !result.isSuccess()){
+            throw new MyException.FeignProcessException();
+        }
+
+        if (!result.getData()){
+            throw new MyException.MessageSendException("你不是对方的好友，消息发送失败！");
+        }
+
         //消息入库
         baseMsgService.saveMsg(msg);
 

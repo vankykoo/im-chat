@@ -104,6 +104,16 @@ public class GroupUserServiceImpl extends ServiceImpl<GroupUserMapper, GroupUser
         //保存到群在线用户中
         RedisUtil.sput(OnlineCache.GROUP_ONLINE_USER + groupId, userId);
     }
+
+    @Override
+    public Boolean isUserInGroup(Long userId, Long groupId) {
+        LambdaQueryWrapper<GroupUser> wrapper = new LambdaQueryWrapper<>();
+
+        wrapper.eq(GroupUser::getUserId, userId);
+        wrapper.eq(GroupUser::getGroupId, groupId);
+
+        return this.exists(wrapper);
+    }
 }
 
 

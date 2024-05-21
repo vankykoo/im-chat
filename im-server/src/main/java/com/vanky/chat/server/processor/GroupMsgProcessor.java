@@ -5,6 +5,7 @@ import com.vanky.chat.common.bo.OfflineGroupMsgDetailBo;
 import com.vanky.chat.common.bo.OfflineMsgInfo;
 import com.vanky.chat.common.cache.OnlineCache;
 import com.vanky.chat.common.constant.TypeEnum;
+import com.vanky.chat.common.exception.MyException;
 import com.vanky.chat.common.feign.leafFeign.IdGeneratorFeignClient;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.utils.CommonConverter;
@@ -59,6 +60,12 @@ public class GroupMsgProcessor {
      * @param msg
      */
     public void receiveGroupMsg(BaseMsgProto.BaseMsg msg, Channel channel){
+        //判断用户是否在群内
+        Boolean userInGroup = groupUserService.isUserInGroup(msg.getFromUserId(), msg.getToUserId());
+        if (!userInGroup){
+            throw new MyException.MessageSendException("你已不在群内，消息发送失败！");
+        }
+
         //1.通过与发送方的共享密钥进行消息解码
         ByteString content = msg.getContent();
         String rowContent = msgEncryptUtil.msgDecrypt(content, msg.getToUserId(), msg.getFromUserId(),

@@ -9,5 +9,18 @@ import com.vanky.chat.user.pojo.po.Relation;
 * @createDate 2024-03-25 21:05:01
 */
 public interface RelationService extends IService<Relation> {
+    /**
+     * 添加好友
+     * @param fromUserId
+     * @param toUserId
+     */
+    void addFriend(Long fromUserId, Long toUserId);
 
+    /**
+     * 判断用户是否为好友关系
+     * @param fromUserId
+     * @param toUserId
+     * @return
+     */
+    Boolean areUsersFriends(Long fromUserId, Long toUserId);
 }
