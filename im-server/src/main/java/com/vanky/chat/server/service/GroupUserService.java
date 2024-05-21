@@ -56,4 +56,12 @@ public interface GroupUserService extends IService<GroupUser> {
      * @param groupId
      */
     void joinGroup(Long userId, Long groupId);
+
+    /**
+     * 判断用户是否在群内
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    Boolean isUserInGroup(Long userId, Long groupId);
 }

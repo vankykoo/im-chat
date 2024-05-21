@@ -10,10 +10,7 @@ import com.vanky.chat.common.feign.leafFeign.IdGeneratorFeignClient;
 import com.vanky.chat.common.utils.DHKeyUtil;
 import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.user.mapper.PermissionMapper;
-import com.vanky.chat.user.pojo.po.ImUser;
-import com.vanky.chat.user.pojo.po.Permission;
-import com.vanky.chat.user.pojo.po.Role;
-import com.vanky.chat.user.pojo.po.User;
+import com.vanky.chat.user.pojo.po.*;
 import com.vanky.chat.user.pojo.to.UserTo;
 import com.vanky.chat.user.service.ImUserService;
 import com.vanky.chat.user.mapper.ImUserMapper;
@@ -47,7 +44,6 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
 
     @Resource
     private IdGeneratorFeignClient idGeneratorFeignClient;
-
 
     @Override
     public ImUser getUserByUserName(String username) {
@@ -140,6 +136,8 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
 
         return imUser;
     }
+
+
 }
 
 
