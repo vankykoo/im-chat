@@ -1,6 +1,7 @@
 package com.vanky.chat.common.feign.userFeign;
 
 import com.vanky.chat.common.bo.ImUserBo;
+import com.vanky.chat.common.config.FeignRequestInterceptor;
 import com.vanky.chat.common.response.Result;
 import com.vanky.chat.common.to.UserTo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author vanky
  * @create 2024/4/23 15:01
  */
-@FeignClient(value = "im-user")
+//@FeignClient(value = "im-user")
+@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
 public interface ImUserFeignClient {
 
     @GetMapping(value = "/user/getUserPublicKey")

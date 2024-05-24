@@ -3,6 +3,7 @@ package com.vanky.chat.user.controller;
 import com.vanky.chat.common.response.Result;
 import com.vanky.chat.user.service.RelationService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user/relation")
+@Tag(name = "好友关系维护相关接口")
 public class RelationController {
 
     @Resource

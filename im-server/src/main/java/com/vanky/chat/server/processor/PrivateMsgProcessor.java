@@ -70,6 +70,8 @@ public class PrivateMsgProcessor {
         BaseMsg baseMsg = BaseMsg.Proto2BaseMsg(msg);
 
         pushProxy.privateMsg(baseMsg);
+
+        log.info("服务端收到用户【{}】 发送给 用户【{}】的私信消息", msg.getFromUserId(), msg.getToUserId());
     }
 
     /**

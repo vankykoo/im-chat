@@ -1,4 +1,7 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
   # 数据库
   datasource:
     username: ${MYSQL_USERNAME}

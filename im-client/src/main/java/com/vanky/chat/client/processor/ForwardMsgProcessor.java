@@ -2,6 +2,8 @@ package com.vanky.chat.client.processor;
 
 import com.vanky.chat.client.netty.NettyClient;
 import com.vanky.chat.client.channel.UserChannelMap;
+import com.vanky.chat.client.utils.SendAckMsgUtil;
+import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.utils.CommonConverter;
 import com.vanky.chat.common.utils.CommonMsgGenerator;
@@ -49,6 +51,9 @@ public class ForwardMsgProcessor {
         NioSocketChannel newChannel = nettyClient.connect(host, port);
         UserChannelMap.hostChannel.put(address, newChannel);
         newChannel.writeAndFlush(forwardMsg);
+
+        log.info("客户端处理了来自服务端的转发消息！ {} ====> {}",
+                msg.getFromUserId(), msg.getToUserId());
     }
 
 }

@@ -70,7 +70,6 @@ public class GroupMsgProcessor {
         ByteString content = msg.getContent();
         String rowContent = msgEncryptUtil.msgDecrypt(content, msg.getToUserId(), msg.getFromUserId(),
                 TypeEnum.ChatType.GROUP_CHAT.getValue());
-        log.info("群消息解码成功：{}", rowContent);
 
         //2.消息入库
         BaseMsgProto.BaseMsg groupMsg = updateUniqueIdAndContent(msg, rowContent);
@@ -91,6 +90,9 @@ public class GroupMsgProcessor {
 
             pushProxy.groupMsg(groupMsg2Push);
         }
+
+        log.info("服务端收到用户【{}】 给群聊【{}】发送的消息 ==> {}",
+                msg.getFromUserId(), msg.getToUserId(), rowContent);
     }
 
     private BaseMsgProto.BaseMsg updateUniqueIdAndContent(BaseMsgProto.BaseMsg msg, String rowContent){

@@ -53,11 +53,9 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
             case 0:
                 //登录消息
                 loginMsgProcessor.registerLoginUser(msg, ctx.channel());
-                log.info("服务端收到客户端的登录消息：{}", msg);
                 //推送离线消息给用户
                 privateMsgProcessor.pushOfflineMsg(msg.getFromUserId());
                 groupMsgProcessor.pushOfflineMsg(msg.getFromUserId());
-
                 break;
             case 1:
                 //聊天消息
@@ -68,7 +66,6 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
                     //群聊消息
                     groupMsgProcessor.receiveGroupMsg(msg, ctx.channel());
                 }
-                log.info("服务端收到客户端的聊天消息：{}", msg.getContent());
                 break;
             case 2:
                 //ack消息
@@ -77,12 +74,9 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
                 }else {
                     ackMsgProcessor.groupMsgAck(msg);
                 }
-
-                log.info("服务端收到客户端的ack消息：{}",msg.getContent());
                 break;
             case 5:
                 //服务端收到转发消息
-
                 break;
             case 11:
                 //收到离线消息拉取成功的ack消息
@@ -93,7 +87,6 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
                 break;
             case 13:
                 SendMsgUtil.sendAckMsg(ctx.channel(), msg, TypeEnum.MsgType.ACK_MSG);
-
                 //客户端进入聊天框，将已经送达的消息已读处理
                 if (msg.getChatType() == TypeEnum.ChatType.PRIVATE_CHAT.getValue()){
                     //私聊
@@ -120,7 +113,6 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-
         System.out.println("离线了！=====》 " + ctx);
     }
 

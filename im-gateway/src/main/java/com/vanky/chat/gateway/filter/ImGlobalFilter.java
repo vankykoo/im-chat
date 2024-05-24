@@ -55,6 +55,7 @@ public class ImGlobalFilter implements GlobalFilter, Ordered {
 
         //获取uri 路径
         String path = request.getURI().getPath();
+        log.info("URI = 【{}】 进入 ImGlobalFilter", path);
 
         if (skipPaths.contains(path)){
             //2. 无需认证的地址
@@ -99,7 +100,8 @@ public class ImGlobalFilter implements GlobalFilter, Ordered {
 
     private boolean feignRequestCheck(ServerHttpRequest request){
         String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if ("feign_inner_request_vk".equals(token)){
+        if ("vk_feign_req".equals(token)){
+            log.info("feign 请求，直接放行！");
             return true;
         }
 

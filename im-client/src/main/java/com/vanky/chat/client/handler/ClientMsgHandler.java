@@ -80,7 +80,6 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
                 }else{
                     privateMsgProcessor.receivePrivateMsg(msg, nioSocketChannel);
                 }
-
                 break;
             case 2:
                 //ack 消息
@@ -91,8 +90,6 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
                 SendAckMsgUtil.sendAckMsg(msg, nioSocketChannel, TypeEnum.MsgType.ACK_MSG.getValue());
                 //处理转发消息
                 forwardMsgProcessor.forwardMsg(msg);
-                log.info("客户端处理了来自服务端的转发消息！ {} ====> {}",
-                        msg.getFromUserId(), msg.getToUserId());
                 break;
             case 7:
             case 8:

@@ -72,7 +72,7 @@ public class AckMsgProcessor {
 
         //3.查询比当前消息id小且没有ack的消息【兜底】
 
-        log.info("privateMsgAck 结束时间：{} ms", System.currentTimeMillis());
+        log.info("服务端收到客户端 私信消息 的ack消息：{}",msg.getContent());
     }
 
     /**
@@ -99,7 +99,7 @@ public class AckMsgProcessor {
 
         waitAckUtil.deleteWaitingAckMsgDetail(content);
 
-        log.info("groupMsgAck 结束时间：{} ms", System.currentTimeMillis());
+        log.info("服务端收到客户端 群聊消息 的ack消息：{}",msg.getContent());
     }
 
 

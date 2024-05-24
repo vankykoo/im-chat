@@ -15,6 +15,7 @@ import com.vanky.chat.server.session.ChatSessionMap;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2024/3/29 16:54
  */
 @Service
+@Slf4j
 public class LoginMsgProcessor {
 
     @Resource
@@ -67,6 +69,8 @@ public class LoginMsgProcessor {
         //4.发送ack消息
         BaseMsgProto.BaseMsg ackMsg = commonMsgGenerator.generateAckMsg(msg, TypeEnum.MsgType.ACK_MSG.getValue());
         channel.writeAndFlush(ackMsg);
+
+        log.info("收到用户id = 【{}】的登录信息", userId);
     }
 
 
@@ -82,5 +86,7 @@ public class LoginMsgProcessor {
 
             RedisUtil.sdel(cacheKey, groupUser.getUserId());
         }
+
+        log.info("用户 【{}】 退出登录", msg.getFromUserId());
     }
 }

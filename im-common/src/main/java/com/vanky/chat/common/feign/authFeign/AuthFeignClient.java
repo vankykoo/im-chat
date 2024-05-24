@@ -2,6 +2,7 @@ package com.vanky.chat.common.feign.authFeign;
 
 import com.vanky.chat.common.bo.AccessTokenInfoBO;
 import com.vanky.chat.common.bo.CheckRedisTokenBo;
+import com.vanky.chat.common.config.FeignRequestInterceptor;
 import com.vanky.chat.common.response.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
  * @author vanky
  * @create 2024/5/16 20:06
  */
-@FeignClient(value = "im-auth")
+//@FeignClient(value = "im-auth")
+@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
 public interface AuthFeignClient {
 
     @GetMapping(value = "/auth/generateAccessToken")

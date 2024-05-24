@@ -1,9 +1,6 @@
 package com.vanky.chat.user.pojo.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,21 +28,25 @@ public class Relation implements Serializable {
     /**
      * 
      */
+    @TableField(value = "user_id1")
     private Long userId1;
 
     /**
      * 
      */
+    @TableField(value = "user_id2")
     private Long userId2;
 
     /**
      * 
      */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 
      */
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
