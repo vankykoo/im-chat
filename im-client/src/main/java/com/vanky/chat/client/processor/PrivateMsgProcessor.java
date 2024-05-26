@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.TypeReference;
 import com.google.protobuf.ByteString;
 import com.vanky.chat.client.utils.SendAckMsgUtil;
+import com.vanky.chat.client.utils.SendMsgUtil;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo4Row;
 import com.vanky.chat.common.constant.TypeEnum;
@@ -51,7 +52,8 @@ public class PrivateMsgProcessor {
 
             log.info("收到服务端发来私信消息：{}", content);
             BaseMsgProto.BaseMsg baseMsg = commonMsgGenerator.generateAckMsg(msg, TypeEnum.MsgType.ACK_MSG.getValue());
-            channel.writeAndFlush(baseMsg);
+            //channel.writeAndFlush(baseMsg);
+            SendMsgUtil.sendMsg((NioSocketChannel) channel, baseMsg);
 
             return content;
         } catch (Exception e) {

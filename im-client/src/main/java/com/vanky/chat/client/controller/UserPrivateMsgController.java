@@ -60,6 +60,7 @@ public class UserPrivateMsgController {
 
         if (channel == null || !channel.isActive()){
             //重新建立连接
+            log.info("客户端无该用户【{}】连接，正在重连~",privateMsgTo.getFromUserId());
             channel = nettyClient.connect("localhost", 20003);
             UserChannelMap.userChannel.put(privateMsgTo.getFromUserId(), channel);
         }

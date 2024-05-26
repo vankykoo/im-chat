@@ -7,27 +7,21 @@ import com.vanky.chat.client.processor.ForwardMsgProcessor;
 import com.vanky.chat.client.channel.UserChannelMap;
 import com.vanky.chat.client.processor.GroupMsgProcessor;
 import com.vanky.chat.client.processor.PrivateMsgProcessor;
-import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.client.utils.SendAckMsgUtil;
-import com.vanky.chat.common.bo.OfflineMsgDetailBo;
 import com.vanky.chat.common.bo.OfflineMsgInfo;
 import com.vanky.chat.common.cache.ReceivedMsgCache;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.utils.CommonConverter;
-import com.vanky.chat.common.utils.CommonMsgGenerator;
 import com.vanky.chat.common.utils.MsgEncryptUtil;
 import com.vanky.chat.common.utils.StringRedisUtil;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -36,19 +30,12 @@ import java.util.concurrent.TimeUnit;
  * @author vanky
  */
 @Component
-@ChannelHandler.Sharable
 @Slf4j
-public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.BaseMsg> {
+public class ClientMsgHandler{
 
     @Resource
     @Lazy
     private ForwardMsgProcessor forwardMsgProcessor;
-
-    @Resource
-    private MsgGenerator msgGenerator;
-
-    @Resource
-    private CommonMsgGenerator commonMsgGenerator;
 
     @Resource
     private MsgEncryptUtil msgEncryptUtil;
@@ -59,8 +46,7 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
     @Resource
     private GroupMsgProcessor groupMsgProcessor;
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg){
+    protected void handle(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg){
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
         Long currentClientUserId = UserChannelMap.context.get(nioSocketChannel.hashCode());
 
@@ -138,28 +124,5 @@ public class ClientMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
         }
 
         StringRedisUtil.put(receivedMsgKey, "", ReceivedMsgCache.CACHE_TIME, TimeUnit.MINUTES);
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx){
-        System.out.println("连接服务端成功===》" + ctx);
-        System.out.println("size = " + UserChannelMap.userChannel.size());
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx){
-        //Long userId = UserChannelMap.context.get(ctx.channel().hashCode());
-        //
-        //BaseMsgProto.BaseMsg baseMsg = msgGenerator.generateLogoutMsg(userId);
-        //
-        //ctx.channel().writeAndFlush(baseMsg);
-
-        System.out.println("与服务端连接断开了 ===》 " + ctx);
-        System.out.println("size = " + UserChannelMap.userChannel.size());
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause){
-        cause.printStackTrace();
     }
 }

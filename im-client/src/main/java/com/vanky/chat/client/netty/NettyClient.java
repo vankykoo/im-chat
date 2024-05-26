@@ -1,7 +1,8 @@
 package com.vanky.chat.client.netty;
 
-import com.vanky.chat.client.handler.ClientMsgHandler;
-import com.vanky.chat.common.protobuf.BaseMsgProto;
+import com.vanky.chat.client.handler.ClientMultiProtocolHandler;
+import com.vanky.chat.common.handler.MultiProtocolDecoder;
+import com.vanky.chat.common.handler.MultiProtocolEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,11 +11,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
-import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -30,7 +27,7 @@ public class NettyClient {
 
     @Resource
     @Lazy
-    private ClientMsgHandler clientMsgHandler;
+    private ClientMultiProtocolHandler clientMultiProtocolHandler;
 
     private NioEventLoopGroup group;
     private Bootstrap bootstrap;
@@ -52,18 +49,19 @@ public class NettyClient {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ChannelPipeline pipeline = ch.pipeline();
-
-                        pipeline.addLast(new ReadTimeoutHandler(1800, TimeUnit.SECONDS));
-
-                        //in解码
-                        ch.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-                        ch.pipeline().addLast(new ProtobufDecoder(BaseMsgProto.BaseMsg.getDefaultInstance()));
-
-                        pipeline.addLast("clientMsgHandler", clientMsgHandler);
-
-                        //out编码
-                        ch.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
-                        ch.pipeline().addLast(new ProtobufEncoder());
+                        /**
+                         * IdleStateHandler 是 Netty 提供的一个处理器，用于检测通道的空闲状态，
+                         * 并在满足特定的空闲条件时触发一个 IdleStateEvent 事件。它可以帮助我们
+                         * 实现对连接的心跳检测，以便在连接空闲超时时采取相应的处理措施，例如发送
+                         * 心跳消息或关闭连接。
+                         */
+                        pipeline.addLast(new IdleStateHandler(0, 2, 0, TimeUnit.MINUTES));
+                        //解码器
+                        pipeline.addLast(new MultiProtocolDecoder());
+                        //处理器
+                        pipeline.addLast("clientMultiProtocolHandler", clientMultiProtocolHandler);
+                        //编码器
+                        pipeline.addLast(new MultiProtocolEncoder());
                     }
                 });
 

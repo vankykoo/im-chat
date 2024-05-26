@@ -4,12 +4,14 @@ import com.vanky.chat.common.bo.GlobalChatSessionBo;
 import com.vanky.chat.common.bo.UserBo;
 import com.vanky.chat.common.cache.ChannelCache;
 import com.vanky.chat.common.cache.OnlineCache;
+import com.vanky.chat.common.cache.RedisCacheKey;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.utils.CommonMsgGenerator;
 import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.pojo.GroupUser;
 import com.vanky.chat.server.service.GroupUserService;
+import com.vanky.chat.server.session.ChannelUserMap;
 import com.vanky.chat.server.session.ChatSession;
 import com.vanky.chat.server.session.ChatSessionMap;
 import io.netty.channel.Channel;
@@ -44,6 +46,7 @@ public class LoginMsgProcessor {
         ChatSession chatSession = new ChatSession(channel, userBo);
         long userId = msg.getFromUserId();
         ChatSessionMap.chatSessionMap.put(userId, chatSession);
+        ChannelUserMap.channelUserMap.put(channel.id().asLongText(), userId);
 
         //2.保存到redis
         NioSocketChannel nioSocketChannel = (NioSocketChannel) channel;
@@ -88,5 +91,23 @@ public class LoginMsgProcessor {
         }
 
         log.info("用户 【{}】 退出登录", msg.getFromUserId());
+    }
+
+    public void userChannelDisconnect(String channelId){
+
+        // 1. 个人globalSession
+        Long userId = ChannelUserMap.channelUserMap.remove(channelId);
+
+        ChatSessionMap.chatSessionMap.remove(userId);
+
+        RedisUtil.del(RedisCacheKey.CHAT_SESSION_KEY + userId);
+        // 2. 个人群
+        List<GroupUser> groupUserList = groupUserService.getByUserId(userId);
+        for (GroupUser groupUser : groupUserList) {
+            String cacheKey = OnlineCache.GROUP_ONLINE_USER + groupUser.getGroupId();
+
+            RedisUtil.sdel(cacheKey, groupUser.getUserId());
+        }
+
     }
 }

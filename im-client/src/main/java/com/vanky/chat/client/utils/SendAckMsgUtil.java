@@ -20,7 +20,7 @@ public class SendAckMsgUtil {
 
     public static void sendAckMsg(BaseMsgProto.BaseMsg msg, NioSocketChannel channel, int msgType){
         BaseMsgProto.BaseMsg ackMsg = commonMsgGenerator.generateAckMsg(msg, msgType);
-        channel.writeAndFlush(ackMsg);
+        SendMsgUtil.sendMsg(channel, ackMsg);
     }
 
 }

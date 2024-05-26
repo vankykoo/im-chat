@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.TypeReference;
 import com.google.protobuf.ByteString;
 import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.client.utils.SendAckMsgUtil;
+import com.vanky.chat.client.utils.SendMsgUtil;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
@@ -46,7 +47,7 @@ public class GroupMsgProcessor {
 
             log.info("用户{} 收到群消息: {}", currentClientUserId, rowContent);
             //ack
-            channel.writeAndFlush(ackMsg);
+            SendMsgUtil.sendMsg((NioSocketChannel) channel, ackMsg);
         }catch (Exception e){
             e.printStackTrace();
         }

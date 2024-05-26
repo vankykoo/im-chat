@@ -9,9 +9,7 @@ import com.vanky.chat.server.processor.GroupMsgProcessor;
 import com.vanky.chat.server.processor.LoginMsgProcessor;
 import com.vanky.chat.server.processor.PrivateMsgProcessor;
 import com.vanky.chat.server.utils.SendMsgUtil;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,9 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @create 2024/3/29 16:50
  */
 @Component
-@ChannelHandler.Sharable
 @Slf4j
-public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.BaseMsg> {
+public class ServerMsgHandler{
 
     @Resource
     private LoginMsgProcessor loginMsgProcessor;
@@ -39,8 +36,8 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
     @Resource
     private AckMsgProcessor ackMsgProcessor;
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg) throws Exception {
+    //@Override
+    protected void handle(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg) throws Exception {
         int msgType = msg.getMsgType();
 
         //消息去重
@@ -104,20 +101,5 @@ public class ServerMsgHandler extends SimpleChannelInboundHandler<BaseMsgProto.B
         //处理
         StringRedisUtil.put(ReceivedMsgCache.getServerKey(msg.getId()), "",
                 ReceivedMsgCache.CACHE_TIME, TimeUnit.MINUTES);
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("上线了！=====》 " + ctx);
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("离线了！=====》 " + ctx);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
     }
 }
