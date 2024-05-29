@@ -23,6 +23,9 @@ public class ClientMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
     @Resource
     private HeatBeatClientHandler heatBeatClientHandler;
 
+    @Resource
+    private ReconnectHandler reconnectHandler;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof BaseMsgProto.BaseMsg) {
@@ -42,7 +45,13 @@ public class ClientMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
                 case WRITER_IDLE:
                     SendMsgUtil.sendMsg((NioSocketChannel)ctx.channel(), "ping");
                     break;
-                default:
+                case READER_IDLE:
+                    //断线重连
+                    log.info("已经 7 分钟未收到服务端消息了，尝试重连服务端...");
+                    String oldChannelId = ctx.channel().id().asLongText();
+                    Long userId = UserChannelMap.channelUserMap.remove(oldChannelId);
+                    ctx.channel().close();
+                    reconnectHandler.reconnect(userId, 0);
                     break;
             }
         }
@@ -58,6 +67,9 @@ public class ClientMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
     public void channelInactive(ChannelHandlerContext ctx){
         System.out.println("与服务端连接断开了 ===》 " + ctx);
         System.out.println("size = " + UserChannelMap.userChannel.size());
+        //删除连接id 与 用户id 的映射信息，说明断开连接
+        //String channelId = ctx.channel().id().asLongText();
+        //UserChannelMap.channelUserMap.remove(channelId);
     }
 
     @Override

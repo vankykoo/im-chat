@@ -4,12 +4,14 @@ import com.vanky.chat.client.netty.NettyClient;
 import com.vanky.chat.client.channel.UserChannelMap;
 import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.common.ApplicationContext;
+import com.vanky.chat.common.exception.MyException;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.response.Result;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +37,7 @@ public class UserLoginController {
         NioSocketChannel channel = nettyClient.connect("127.0.0.1", 20003);
 
         UserChannelMap.userChannel.put(userId, channel);
-
-        UserChannelMap.context.put(channel.hashCode(), userId);
+        UserChannelMap.channelUserMap.put(channel.id().asLongText(), userId);
 
         //登录前检查本地有没有私钥，如果没有就要生成，而且把公钥传给客户端
 
@@ -51,12 +52,23 @@ public class UserLoginController {
 
     @GetMapping ("/disconnect")
     @Operation(summary = "用户退出登录")
-    public Result logout(@RequestParam("userId") Long userId){
+    public Result logout(@RequestParam("userId") Long userId, @RequestHeader("X-User-id") String context){
+
+        Long headerUserId = Long.parseLong(context);
+        if (Long.compareUnsigned(userId, headerUserId) != 0){
+            throw new MyException.ImAuthenticationException("认证失败，别用别人的token访问接口！");
+        }
+
         NioSocketChannel channel = UserChannelMap.userChannel.get(userId);
 
-        UserChannelMap.context.remove(channel.hashCode());
+        if (channel == null){
+            //已经断线
 
-        //这里放一个登录的消息
+        }
+
+        UserChannelMap.channelUserMap.remove(channel.id().asLongText());
+
+        //这里放一个登出的消息
         BaseMsgProto.BaseMsg msg = msgGenerator.generateLogoutMsg(userId);
         channel.writeAndFlush(msg);
 

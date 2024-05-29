@@ -1,8 +1,9 @@
 package com.vanky.chat.client.netty;
 
+import com.vanky.chat.client.handler.ClientMultiProtocolDecoder;
+import com.vanky.chat.client.handler.ClientMultiProtocolEncoder;
 import com.vanky.chat.client.handler.ClientMultiProtocolHandler;
-import com.vanky.chat.common.handler.MultiProtocolDecoder;
-import com.vanky.chat.common.handler.MultiProtocolEncoder;
+import feign.Client;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,6 +12,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
@@ -55,13 +59,13 @@ public class NettyClient {
                          * 实现对连接的心跳检测，以便在连接空闲超时时采取相应的处理措施，例如发送
                          * 心跳消息或关闭连接。
                          */
-                        pipeline.addLast(new IdleStateHandler(0, 2, 0, TimeUnit.MINUTES));
+                        pipeline.addLast(new IdleStateHandler(6, 1, 0, TimeUnit.MINUTES));
                         //解码器
-                        pipeline.addLast(new MultiProtocolDecoder());
+                        pipeline.addLast("clientMultiProtocolDecoder", new ClientMultiProtocolDecoder());
                         //处理器
                         pipeline.addLast("clientMultiProtocolHandler", clientMultiProtocolHandler);
                         //编码器
-                        pipeline.addLast(new MultiProtocolEncoder());
+                        pipeline.addLast("clientMultiProtocolEncoder", new ClientMultiProtocolEncoder());
                     }
                 });
 

@@ -14,11 +14,8 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
-import org.springframework.http.server.reactive.TomcatHttpHandlerAdapter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -91,7 +88,13 @@ public class ImGlobalFilter implements GlobalFilter, Ordered {
         List<String> permissions = tokenInfo.getPermissions();
         if (permissions.contains(permissionBo.getPerms())){
             //认证成功！
-            return chain.filter(exchange);
+            ServerHttpRequest newRequest = exchange.getRequest().mutate().header("X-User-id", tokenInfo.getUserId().toString()).build();
+
+            ServerWebExchange webExchange = exchange.mutate()
+                    .request(newRequest)
+                    .build();
+
+            return chain.filter(webExchange);
         }else {
             //认证失败！
             throw new MyException.ImAuthorizationException();

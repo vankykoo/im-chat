@@ -48,7 +48,7 @@ public class ClientMsgHandler{
 
     protected void handle(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg){
         NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
-        Long currentClientUserId = UserChannelMap.context.get(nioSocketChannel.hashCode());
+        Long currentClientUserId = UserChannelMap.channelUserMap.get(nioSocketChannel.id().asLongText());
 
         //客户端消息去重
         String receivedMsgKey = ReceivedMsgCache.getClientKey(currentClientUserId, msg.getId());

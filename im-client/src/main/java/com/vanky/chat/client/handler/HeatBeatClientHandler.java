@@ -1,5 +1,6 @@
 package com.vanky.chat.client.handler;
 
+import com.vanky.chat.client.channel.UserChannelMap;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
