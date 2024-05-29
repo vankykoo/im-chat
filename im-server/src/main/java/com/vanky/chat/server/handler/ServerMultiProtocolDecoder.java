@@ -1,6 +1,5 @@
 package com.vanky.chat.server.handler;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -17,18 +16,6 @@ import java.util.Map;
 
 @Slf4j
 public class ServerMultiProtocolDecoder extends ByteToMessageDecoder {
-
-    //public static final ProtobufDecoder protobufDecoder;
-    //
-    //public static final ProtobufVarint32FrameDecoder protobufVarint32FrameDecoder;
-    //
-    //public static final StringDecoder stringDecoder;
-    //
-    //static {
-    //    protobufDecoder = SpringUtil.getBean("protobufDecoder");
-    //    protobufVarint32FrameDecoder = SpringUtil.getBean("protobufVarint32FrameDecoder");
-    //    stringDecoder = SpringUtil.getBean("stringDecoder");
-    //}
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out){
