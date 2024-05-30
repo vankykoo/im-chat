@@ -1,6 +1,5 @@
 package com.vanky.chat.client.handler;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -10,27 +9,13 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.CharsetUtil;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
 @Slf4j
 public class ClientMultiProtocolDecoder extends ByteToMessageDecoder {
-
-    //public static final ProtobufDecoder protobufDecoder;
-    //
-    //public static final ProtobufVarint32FrameDecoder protobufVarint32FrameDecoder;
-    //
-    //public static final StringDecoder stringDecoder;
-    //
-    //static {
-    //    protobufDecoder = SpringUtil.getBean("protobufDecoder");
-    //    protobufVarint32FrameDecoder = SpringUtil.getBean("protobufVarint32FrameDecoder");
-    //    stringDecoder = SpringUtil.getBean("stringDecoder");
-    //}
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out){
@@ -75,36 +60,54 @@ public class ClientMultiProtocolDecoder extends ByteToMessageDecoder {
         super.exceptionCaught(ctx, cause);
     }
 
+    /**
+     * 判断给定的 ByteBuf 是否包含 Protobuf 消息。
+     *
+     * @param byteBuf 要检查的 ByteBuf
+     * @return 如果是 Protobuf 消息返回 true，否则返回 false
+     */
     private boolean isProtobuf(ByteBuf byteBuf) {
-        // 检查消息的前几个字节，判断是否是 Protobuf 消息
-        byteBuf.markReaderIndex(); // 标记读索引
+        // 标记当前的读索引位置，以便后续重置
+        byteBuf.markReaderIndex();
         boolean isProtobuf = false;
 
         try {
+            // 尝试读取 Protobuf 消息的长度字段
             int length = readRawVarint32(byteBuf);
-            // 假设长度不为负且剩余字节足够长即为Protobuf消息
+            // 判断长度是否合法，且剩余可读字节数是否足够长
+            // 假设长度不为负且剩余字节足够长即为 Protobuf 消息
             isProtobuf = length >= 0 && byteBuf.readableBytes() >= length;
         } catch (Exception e) {
+            // 如果出现异常，则认为不是 Protobuf 消息
             isProtobuf = false;
         } finally {
-            byteBuf.resetReaderIndex(); // 重置读索引
+            // 重置读索引到标记的位置
+            byteBuf.resetReaderIndex();
         }
 
         return isProtobuf;
     }
 
+    /**
+     * 从给定的 ByteBuf 中读取一个 varint32 编码的整数。
+     *
+     * @param byteBuf 要读取的 ByteBuf
+     * @return 读取到的整数
+     */
     private int readRawVarint32(ByteBuf byteBuf) {
-        int shift = 0;
-        int result = 0;
+        int shift = 0; // 位移量，用于计算结果
+        int result = 0; // 最终结果
 
-        while (shift < 32) {
-            final byte b = byteBuf.readByte();
-            result |= (b & 0x7F) << shift;
-            if ((b & 0x80) == 0) {
-                return result;
+        while (shift < 32) { // varint32 的最大位移量为 32
+            final byte b = byteBuf.readByte(); // 读取一个字节
+            result |= (b & 0x7F) << shift; // 取出低 7 位并左移相应位数，合并到结果中
+            if ((b & 0x80) == 0) { // 如果最高位为 0，说明这是最后一个字节
+                return result; // 返回结果
             }
-            shift += 7;
+            shift += 7; // 否则继续处理下一个字节，位移量增加 7
         }
+
+        // 如果超过了 32 位，说明 varint32 编码不合法
         throw new IllegalArgumentException("Varint32 too long");
     }
 

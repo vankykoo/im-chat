@@ -34,7 +34,7 @@ public class UserLoginController {
     @GetMapping ("/connect")
     @Operation(summary = "用户登录")
     public Result connect(@RequestParam("userId") Long userId){
-        NioSocketChannel channel = nettyClient.connect("127.0.0.1", 20003);
+        NioSocketChannel channel = nettyClient.connect();
 
         UserChannelMap.userChannel.put(userId, channel);
         UserChannelMap.channelUserMap.put(channel.id().asLongText(), userId);

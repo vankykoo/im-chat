@@ -1,10 +1,7 @@
 package com.vanky.chat.server.handler;
 
-import com.vanky.chat.common.cache.RedisCacheKey;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
-import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.processor.LoginMsgProcessor;
-import com.vanky.chat.server.session.ChannelUserMap;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

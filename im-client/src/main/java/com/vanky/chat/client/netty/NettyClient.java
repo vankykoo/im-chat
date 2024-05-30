@@ -75,15 +75,15 @@ public class NettyClient {
     public NioSocketChannel connect(String host, int port){
         try{
             ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
+            return (NioSocketChannel) channelFuture.channel();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            //GenericFutureListener<ChannelFuture> listener = new GenericFutureListener<ChannelFuture>() {
-            //    @Override
-            //    public void operationComplete(ChannelFuture channelFuture) throws Exception {
-            //        channelFuture.channel().writeAndFlush("做完了！");
-            //    }
-            //};
-            //channelFuture.addListener(listener);
-
+    public NioSocketChannel connect(){
+        try{
+            ChannelFuture channelFuture = bootstrap.connect("localhost", 20003).sync();
             return (NioSocketChannel) channelFuture.channel();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
