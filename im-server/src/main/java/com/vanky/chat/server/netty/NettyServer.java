@@ -34,12 +34,12 @@ public class NettyServer {
     private int port;
 
     public void run(){
-        NioEventLoopGroup boosGroup = new NioEventLoopGroup(1);
+        NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(boosGroup, workerGroup)
+            bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -52,7 +52,7 @@ public class NettyServer {
                              * 实现对连接的心跳检测，以便在连接空闲超时时采取相应的处理措施，例如发送
                              * 心跳消息或关闭连接。
                              */
-                            pipeline.addLast(new IdleStateHandler(7, 0, 0, TimeUnit.MINUTES));
+                            pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.MINUTES));
                             //解码器
                             pipeline.addLast("serverMultiProtocolDecoder", new ServerMultiProtocolDecoder());
                             //处理器
@@ -67,7 +67,7 @@ public class NettyServer {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }finally {
-            boosGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
     }

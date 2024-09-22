@@ -1,8 +1,10 @@
 package com.vanky.chat.server.handler;
 
+import com.google.protobuf.ByteString;
 import com.vanky.chat.common.cache.ReceivedMsgCache;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
+import com.vanky.chat.common.utils.CommonConverter;
 import com.vanky.chat.common.utils.StringRedisUtil;
 import com.vanky.chat.server.processor.AckMsgProcessor;
 import com.vanky.chat.server.processor.GroupMsgProcessor;
@@ -66,11 +68,7 @@ public class ServerMsgHandler{
                 break;
             case 2:
                 //ack消息
-                if (msg.getChatType() == TypeEnum.ChatType.PRIVATE_CHAT.getValue()){
-                    ackMsgProcessor.privateMsgAck(msg);
-                }else {
-                    ackMsgProcessor.groupMsgAck(msg);
-                }
+                ackMsgProcessor.processAckMsg(msg);
                 break;
             case 5:
                 //服务端收到转发消息
@@ -95,6 +93,10 @@ public class ServerMsgHandler{
                 break;
             case 14:
                 loginMsgProcessor.userLogout(msg);
+                break;
+            case 15:
+                // 拉取历史记录
+                privateMsgProcessor.pushHistoryMsg(msg.getFromUserId(), msg.getToUserId(), Long.parseLong(CommonConverter.byteString2String(msg.getContent())));
                 break;
         }
 

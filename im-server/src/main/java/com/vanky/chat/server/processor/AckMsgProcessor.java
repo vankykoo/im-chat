@@ -6,10 +6,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.protobuf.ByteString;
 import com.vanky.chat.common.bo.OfflineGroupMsgDetailBo;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo;
+import com.vanky.chat.common.cache.RedisCacheKey;
+import com.vanky.chat.common.cache.RedisSimpleCacheName;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.common.utils.CommonConverter;
 import com.vanky.chat.common.utils.MsgEncryptUtil;
+import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.pojo.BaseMsg;
 import com.vanky.chat.server.pojo.GroupUser;
 import com.vanky.chat.server.push.PushProxy;
@@ -56,6 +59,21 @@ public class AckMsgProcessor {
     @Resource
     private MsgEncryptUtil msgEncryptUtil;
 
+    public void processAckMsg(BaseMsgProto.BaseMsg msg){
+        int chatType = msg.getChatType();
+
+        switch (chatType){
+            case 0:
+                // 私聊消息
+                privateMsgAck(msg);
+                break;
+            case 1:
+                // 群聊消息
+                groupMsgAck(msg);
+                break;
+        }
+    }
+
     /**
      * 收到私信ack
      * @param msg
@@ -100,6 +118,21 @@ public class AckMsgProcessor {
         waitAckUtil.deleteWaitingAckMsgDetail(content);
 
         log.info("服务端收到客户端 群聊消息 的ack消息：{}",msg.getContent());
+    }
+
+    /**
+     * 收到历史消息ack
+     * @param msg
+     */
+    public void historyMsgAck(BaseMsgProto.BaseMsg msg){
+        // 修改该用户在redis（本地）中的oldestMsgId
+        String cacheKey = RedisCacheKey.PRIVATE_OLDEST_MSG_ID_KEY +
+                msg.getFromUserId() + RedisSimpleCacheName.UNION_KEY + msg.getToUserId();
+
+        RedisUtil.put(cacheKey, msg.getContent().toString());
+
+        // 删除redis中缓存
+        waitAckUtil.deleteWaitingAckMsgDetail(Long.toString(msg.getId()));
     }
 
 

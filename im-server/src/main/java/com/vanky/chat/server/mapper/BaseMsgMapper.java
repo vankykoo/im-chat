@@ -49,6 +49,17 @@ public interface BaseMsgMapper extends BaseMapper<BaseMsg> {
      * @return
      */
     void setHasReadByUniqueId(@Param("uniqueIds") List<Long> uniqueIds);
+
+    /**
+     * 查找100条历史记录
+     * @param fromUserId
+     * @param toUseId
+     * @param oldestMsgId
+     * @return
+     */
+    List<BaseMsg> get100HistoryMsg(@Param("fromUserId") Long fromUserId,
+                                   @Param("toUserId") Long toUseId,
+                                   @Param("oldestMsgId") Long oldestMsgId);
 }
 
 

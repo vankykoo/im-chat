@@ -2,6 +2,7 @@ package com.vanky.chat.client.controller;
 
 import com.vanky.chat.client.netty.NettyClient;
 import com.vanky.chat.client.channel.UserChannelMap;
+import com.vanky.chat.client.processor.LoginMsgProcessor;
 import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.common.ApplicationContext;
 import com.vanky.chat.common.exception.MyException;
@@ -29,21 +30,17 @@ public class UserLoginController {
     private NettyClient nettyClient;
 
     @Resource
-    private MsgGenerator msgGenerator;
+    private LoginMsgProcessor loginMsgProcessor;
 
     @GetMapping ("/connect")
     @Operation(summary = "用户登录")
     public Result connect(@RequestParam("userId") Long userId){
-        NioSocketChannel channel = nettyClient.connect();
+        NioSocketChannel channel = nettyClient.connect(null, null, userId);
 
-        UserChannelMap.userChannel.put(userId, channel);
-        UserChannelMap.channelUserMap.put(channel.id().asLongText(), userId);
+        //todo 登录前检查本地有没有私钥，如果没有就要生成，而且把公钥传给客户端
 
-        //登录前检查本地有没有私钥，如果没有就要生成，而且把公钥传给客户端
-
-        //这里放一个登录的消息
-        BaseMsgProto.BaseMsg msg = msgGenerator.generateLoginMsg(userId);
-        channel.writeAndFlush(msg);
+        //这里发送一个登录的消息
+        loginMsgProcessor.sendLoginMsg(userId, channel);
 
         ApplicationContext.setUserId(userId);
 
@@ -63,14 +60,13 @@ public class UserLoginController {
 
         if (channel == null){
             //已经断线
-
+            throw new MyException.NotConnectedException();
         }
 
         UserChannelMap.channelUserMap.remove(channel.id().asLongText());
 
-        //这里放一个登出的消息
-        BaseMsgProto.BaseMsg msg = msgGenerator.generateLogoutMsg(userId);
-        channel.writeAndFlush(msg);
+        //这里发送一个登出的消息
+        loginMsgProcessor.sendLogoutMsg(userId, channel);
 
         channel.shutdown();
 

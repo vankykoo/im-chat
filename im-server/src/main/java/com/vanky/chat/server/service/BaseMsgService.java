@@ -53,4 +53,12 @@ public interface BaseMsgService extends IService<BaseMsg> {
      * @param toUserId
      */
     List<Long> setMsgHasReadByUser(long fromUserId, long toUserId);
+
+    /**
+     * 用户拉取历史消息，每次100条
+     * @param fromUserId
+     * @param toUserId
+     * @param oldestMsgId
+     */
+    List<BaseMsg> getHistoryMsg(Long fromUserId, Long toUserId, Long oldestMsgId);
 }

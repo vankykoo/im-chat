@@ -107,7 +107,7 @@ public class BaseMsg implements Serializable {
         builder.setId(baseMsg.getId())
                 .setChatType(baseMsg.getChatType())
                 .setContent(byteStringContent)
-                .setUniqueId(baseMsg.getUniqueId())
+                //.setUniqueId(baseMsg.getUniqueId())
                 .setFromUserId(baseMsg.getFromUserId())
                 .setToUserId(baseMsg.getToUserId())
                 .setCreateTime(baseMsg.getCreateTime().getTime())

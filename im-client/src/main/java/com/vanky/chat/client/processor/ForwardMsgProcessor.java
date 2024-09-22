@@ -50,7 +50,7 @@ public class ForwardMsgProcessor {
         }
 
         //还没创建过，重新连接一个新的
-        NioSocketChannel newChannel = nettyClient.connect(host, port);
+        NioSocketChannel newChannel = nettyClient.connect(host, port, msg.getFromUserId());
         UserChannelMap.hostChannel.put(address, newChannel);
         SendMsgUtil.sendMsg(newChannel, forwardMsg);
         //newChannel.writeAndFlush(forwardMsg);

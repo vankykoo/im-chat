@@ -21,7 +21,7 @@ public class MsgEncryptUtil {
     private ShareKeyUtil shareKeyUtil;
 
     public ByteString msgEncrypt(String content, Long otherIdOrGroupId, Long myIdOrUserId, int chatType){
-        //获取共享密钥
+        //获取共享密钥,这里暂时存在redis中，真正落地应存在本地
         SecretKey secretKey = shareKeyUtil.getShareKey(otherIdOrGroupId, myIdOrUserId, chatType);
 
         //用共享密钥加密，消息加密

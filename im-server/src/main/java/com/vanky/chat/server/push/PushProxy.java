@@ -42,6 +42,24 @@ public class PushProxy {
         }
     }
 
+    // 推送历史记录100条
+    public void historyMsg(BaseMsg baseMsg){
+        BaseMsgBo baseMsgBo = new BaseMsgBo();
+        BeanUtils.copyProperties(baseMsg, baseMsgBo);
+
+        try {
+            SendResult<String, BaseMsgBo> sendResult = kafkaTemplate
+                    .send("historyMsg", "historyKey", baseMsgBo).get();
+
+            log.info("PushProxy 成功存入【历史记录】消息推送请求到kafka ：{} --> {}",
+                    sendResult.getProducerRecord().topic(), sendResult.getProducerRecord().value().toString());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //2.推送 群聊请求
     public void groupMsg(BaseMsg baseMsg){
         BaseMsgBo baseMsgBo = new BaseMsgBo();

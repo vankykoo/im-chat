@@ -96,6 +96,23 @@ public class BaseMsgServiceImpl extends ServiceImpl<BaseMsgMapper, BaseMsg>
 
         return uniqueIds;
     }
+
+    /**
+     * 用户拉取历史消息，每次100条
+     * @param fromUserId
+     * @param toUserId
+     * @param oldestMsgId
+     */
+    public List<BaseMsg> getHistoryMsg(Long fromUserId, Long toUserId, Long oldestMsgId){
+        List<BaseMsg> baseMsgList = baseMsgMapper.get100HistoryMsg(fromUserId, toUserId, oldestMsgId);
+
+        if (baseMsgList == null || baseMsgList.size() == 0){
+            // 提醒消息已经拉取完毕了
+            log.error("已经到底了！");
+        }
+
+        return baseMsgList;
+    }
 }
 
 

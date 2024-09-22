@@ -26,4 +26,6 @@ public class ExceptionConstant {
 
     public static final String AUTHORIZATION_EXCEPTION = "无访问权限！";
 
+    public static final String NOT_CONNECTED_EXCEPTION = "未连接异常";
+
 }

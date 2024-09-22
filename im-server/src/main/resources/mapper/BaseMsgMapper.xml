@@ -35,10 +35,20 @@
              #{uniqueId}
         </foreach>
     </select>
+
     <select id="getBaseMsgByFromUserIdAndToUserId" parameterType="list" resultType="java.lang.Long">
         select unique_id from base_msg
          where from_user_id = #{fromUserId}
            and to_user_id = #{toUserId}
            and 'status' = 0
+    </select>
+
+    <select id="get100HistoryMsg" parameterType="list" resultType="com.vanky.chat.server.pojo.BaseMsg">
+        select * from base_msg
+        where from_user_id = #{fromUserId}
+            and to_user_id = #{toUserId}
+            and id &lt; #{oldestMsgId}
+        order by id DESC
+        limit 100
     </select>
 </mapper>

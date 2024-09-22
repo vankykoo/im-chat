@@ -132,6 +132,8 @@ public class MsgGenerator {
                 .build();
     }
 
+
+
     /**
      * 把全量离线群聊消息进行分装，分页发送
      * @param offlineMsgs
@@ -220,5 +222,30 @@ public class MsgGenerator {
                 .createTime(new Date())
                 .build();
         return null;
+    }
+
+    /**
+     * 生成历史消息
+     * @param historyMsgList
+     * @param fromUserId
+     * @param toUserId
+     * @return
+     */
+    public BaseMsg generateHistoryMsg(List<BaseMsg> historyMsgList, Long fromUserId, Long toUserId) {
+        String jsonString = JSONObject.toJSONString(historyMsgList);
+
+        // 不用加密，用户获取到消息后自己解密，因为只有用户才有共享密钥
+
+        return BaseMsg.builder()
+                .id(idGeneratorFeignClient.nextId().getData())
+                .chatType(TypeEnum.ChatType.PRIVATE_CHAT.getValue())
+                .content(jsonString.getBytes())
+                //.uniqueId(idGeneratorFeignClient.nextId().getData())
+                .fromUserId(fromUserId)
+                .toUserId(toUserId)
+                .createTime(new Date())
+                .msgType(TypeEnum.MsgType.HISTORY_MSG.getValue())
+                .status(TypeEnum.MsgStatus.HAS_NOT_READ.getValue())
+                .build();
     }
 }

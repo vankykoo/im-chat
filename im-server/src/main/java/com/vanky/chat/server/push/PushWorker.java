@@ -1,6 +1,5 @@
 package com.vanky.chat.server.push;
 
-import com.google.protobuf.ByteString;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.server.pojo.BaseMsg;
 import com.vanky.chat.server.session.ChatSessionMap;
@@ -66,4 +65,9 @@ public class PushWorker {
         SendMsgUtil.sendMsg4Ack(msg, toUserId);
     }
 
+    public void pushHistoryMsg(BaseMsg baseMsg) {
+        BaseMsgProto.BaseMsg msg = BaseMsg.BaseMsg2Proto(baseMsg);
+
+        SendMsgUtil.sendMsg4Ack(msg, baseMsg.getToUserId());
+    }
 }

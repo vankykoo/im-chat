@@ -5,14 +5,14 @@ import com.alibaba.fastjson2.TypeReference;
 import com.google.protobuf.ByteString;
 import com.vanky.chat.client.utils.SendAckMsgUtil;
 import com.vanky.chat.client.utils.SendMsgUtil;
+import com.vanky.chat.common.bo.BaseMsgBo;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo;
 import com.vanky.chat.common.bo.OfflineMsgDetailBo4Row;
+import com.vanky.chat.common.cache.RedisCacheKey;
+import com.vanky.chat.common.cache.RedisSimpleCacheName;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
-import com.vanky.chat.common.utils.AESEncryptUtil;
-import com.vanky.chat.common.utils.CommonMsgGenerator;
-import com.vanky.chat.common.utils.MsgEncryptUtil;
-import com.vanky.chat.common.utils.ShareKeyUtil;
+import com.vanky.chat.common.utils.*;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
@@ -89,4 +89,35 @@ public class PrivateMsgProcessor {
         return rowList;
     }
 
+    public void historyMsg(BaseMsgProto.BaseMsg msg) {
+        // 取出消息内容，封装，解密
+        String jsonString = CommonConverter.byteString2String(msg.getContent());
+        List<BaseMsgBo> list = JSONObject.parseObject(jsonString, new TypeReference<>(){});
+
+        if (list == null || list.size() == 0){
+            log.warn("已经到底了");
+            return;
+        }
+
+        Long oldestMsgId = list.get(0).getId();
+
+        for (BaseMsgBo baseMsgBo : list) {
+            oldestMsgId = Math.min(oldestMsgId, baseMsgBo.getId());
+
+            String rowMsg = msgEncryptUtil
+                    .msgDecrypt(ByteString.copyFrom(baseMsgBo.getContent()),
+                        msg.getFromUserId(),
+                        msg.getToUserId(),
+                        TypeEnum.ChatType.PRIVATE_CHAT.getValue());
+
+            log.info("历史消息【{}】---》{}", baseMsgBo.getId(), rowMsg);
+        }
+
+        // 更新 redis 的 oldestMsgId
+        String oldestMsgIdKey = RedisCacheKey.PRIVATE_OLDEST_MSG_ID_KEY + msg.getFromUserId() + RedisSimpleCacheName.UNION_KEY + msg.getToUserId();
+
+        RedisUtil.put(oldestMsgIdKey, oldestMsgId);
+
+        log.info("用户的oldestMsgId 更新：【{}】 --- {}", oldestMsgIdKey, oldestMsgId);
+    }
 }

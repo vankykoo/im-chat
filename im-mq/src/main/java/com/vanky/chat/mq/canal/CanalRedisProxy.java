@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * @author vanky
  * @create 2024/4/21 20:39
@@ -23,6 +25,11 @@ public class CanalRedisProxy {
 
         if (!StringUtils.hasText(eventType)){
             throw new NullPointerException("内容为空！");
+        }
+
+        // 测试环境数据库较多，过滤一下
+        if(!Objects.equals(canalModel.getDbName(), "im_table")){
+            return;
         }
 
         String routingKey = "";

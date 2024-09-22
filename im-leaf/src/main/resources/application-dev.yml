@@ -13,3 +13,9 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.vanky.chat
+
+logging:
+  file:
+    name: E:/im-log/im-leaf-log
+  pattern:
+    file: '%d{yyyy-MM-ddTHH:mm:ss.SSS} %-5level - %msg%n'

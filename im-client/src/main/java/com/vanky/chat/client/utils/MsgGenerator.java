@@ -22,7 +22,7 @@ public class MsgGenerator {
         BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
 
         builder.setId(idGeneratorFeignClient.nextId().getData())
-                .setUniqueId(idGeneratorFeignClient.nextId().getData())
+                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
                 .setCreateTime(System.currentTimeMillis())
                 .setFromUserId(userId)
                 .setMsgType(TypeEnum.MsgType.LOGIN_MSG.getValue());
@@ -38,7 +38,7 @@ public class MsgGenerator {
                 .setChatType(TypeEnum.ChatType.PRIVATE_CHAT.getValue())
                 .setContent(privateMsgBo.getContent())
                 //唯一id生成
-                .setUniqueId(idGeneratorFeignClient.nextId().getData())
+                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
                 .setFromUserId(privateMsgBo.getFromUserId())
                 .setToUserId(privateMsgBo.getToUserId())
                 .setCreateTime(System.currentTimeMillis())
@@ -61,7 +61,7 @@ public class MsgGenerator {
                 .setChatType(TypeEnum.ChatType.GROUP_CHAT.getValue())
                 .setContent(groupMsgBo.getContent())
                 //唯一id生成
-                .setUniqueId(idGeneratorFeignClient.nextId().getData())
+                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
                 .setFromUserId(groupMsgBo.getFromUserId())
                 .setToUserId(groupMsgBo.getGroupId())
                 .setCreateTime(System.currentTimeMillis())
@@ -125,6 +125,22 @@ public class MsgGenerator {
                 .setCreateTime(System.currentTimeMillis())
                 .setFromUserId(userId)
                 .setMsgType(TypeEnum.MsgType.LOGOUT_MSG.getValue());
+
+        return builder.build();
+    }
+
+    public BaseMsgProto.BaseMsg generatePullHistoryMsg(Long fromUserId, Long toUserId, Long oldestMsgId) {
+        BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
+
+        builder.setId(idGeneratorFeignClient.nextId().getData())
+                .setChatType(TypeEnum.ChatType.PRIVATE_CHAT.getValue())
+                .setContent(CommonConverter.string2ByteString(oldestMsgId.toString()))
+                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
+                .setFromUserId(fromUserId)
+                .setToUserId(toUserId)
+                .setCreateTime(System.currentTimeMillis())
+                .setMsgType(TypeEnum.MsgType.HISTORY_MSG.getValue())
+                .setStatus(TypeEnum.MsgStatus.NOT_SENT.getValue());
 
         return builder.build();
     }

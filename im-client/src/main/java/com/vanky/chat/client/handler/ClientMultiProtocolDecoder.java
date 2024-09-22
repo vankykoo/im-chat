@@ -20,12 +20,19 @@ public class ClientMultiProtocolDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out){
         Map<String, ChannelHandler> map = ctx.pipeline().toMap();
+
+        log.info("*********************ClientMultiProtocolDecoder*******************************");
+
         if (isProtobuf(in)) {
+            log.info("识别为 Protobuf 信息");
             if (map.containsKey("stringDecoder")){
+                log.info("当前 pipeline 中有 String 解码器");
                 ctx.pipeline().remove("stringDecoder");
             }
 
             if (!map.containsKey("protobufDecoder")){
+                log.info("当前 pipeline 中没有 protobuf 解码器，添加中。。。");
+
                 //添加protobuf解码器
                 ctx.pipeline().addAfter("clientMultiProtocolDecoder", "protobufDecoder",
                         new ProtobufDecoder(BaseMsgProto.BaseMsg.getDefaultInstance()));
@@ -35,12 +42,18 @@ public class ClientMultiProtocolDecoder extends ByteToMessageDecoder {
 
             out.add(in.retain());
         } else if (isString(in)) {
+            log.info("识别为 String 信息");
+
             if (map.containsKey("protobufDecoder")){
+                log.info("当前 pipeline 中有 protobuf 解码器");
+
                 ctx.pipeline().remove("protobufDecoder");
                 ctx.pipeline().remove("protobufVarint32FrameDecoder");
             }
 
             if (!map.containsKey("stringDecoder")){
+                log.info("当前 pipeline 中没有 String 解码器，添加中。。。");
+
                 //添加 string 解码器
                 ctx.pipeline().addBefore("clientMultiProtocolHandler", "stringDecoder",
                         new StringDecoder());
@@ -51,6 +64,8 @@ public class ClientMultiProtocolDecoder extends ByteToMessageDecoder {
             in.resetReaderIndex();
             throw new IllegalArgumentException("Unknown message prefix");
         }
+
+        log.info("****************************************************");
     }
 
     @Override

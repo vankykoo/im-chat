@@ -45,6 +45,11 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+im:
+  server:
+    host: localhost
+    port: 20003
+
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
@@ -57,3 +62,9 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.vanky.chat
+
+logging:
+  file:
+    name: E:/im-log/im-client-log
+  pattern:
+    file: '%d{yyyy-MM-ddTHH:mm:ss.SSS} %-5level - %msg%n'

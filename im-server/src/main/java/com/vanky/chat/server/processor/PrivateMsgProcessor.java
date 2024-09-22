@@ -134,4 +134,15 @@ public class PrivateMsgProcessor {
         //等待ack
         SendMsgUtil.sendMsg4Ack(channel, baseMsg);
     }
+
+    public void pushHistoryMsg(Long fromUserId, Long toUserId, Long oldestMsgId){
+        // 1. 获取100条历史消息
+        List<BaseMsg> historyMsgList = baseMsgService.getHistoryMsg(fromUserId, toUserId, oldestMsgId);
+
+        // 2. 封装成一条BaseMsg
+        BaseMsg baseMsg = msgGenerator.generateHistoryMsg(historyMsgList, fromUserId, toUserId);
+
+        // 3. 推送
+        pushProxy.historyMsg(baseMsg);
+    }
 }

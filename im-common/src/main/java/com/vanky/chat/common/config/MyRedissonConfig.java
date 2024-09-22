@@ -17,7 +17,7 @@ public class MyRedissonConfig {
     public RedissonClient redissonClient(){
         Config config = new Config();
         //单节点模式
-        config.useSingleServer().setAddress("redis://localhost:6379")
+        config.useSingleServer().setAddress("redis://192.168.200.134:6379")
                 .setPassword("123456")
                 .setDatabase(0);
 

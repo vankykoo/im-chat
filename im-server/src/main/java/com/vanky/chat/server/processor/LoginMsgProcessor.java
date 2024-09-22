@@ -94,7 +94,6 @@ public class LoginMsgProcessor {
     }
 
     public void userChannelDisconnect(String channelId){
-
         // 1. 个人globalSession
         Long userId = ChannelUserMap.channelUserMap.remove(channelId);
 
@@ -108,6 +107,5 @@ public class LoginMsgProcessor {
 
             RedisUtil.sdel(cacheKey, groupUser.getUserId());
         }
-
     }
 }

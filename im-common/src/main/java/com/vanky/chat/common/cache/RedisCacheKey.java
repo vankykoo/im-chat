@@ -19,4 +19,7 @@ public class RedisCacheKey {
 
     //群聊共享密钥：【share_key:private:(自己的id):(群聊的id)】
     public static final String GROUP_SHARE_KEY = "share_key:group:";
+
+    // 私聊历史消息拉取的最早消息id：【history:private_oldest_msg_id:(自己的id):(对方的id)】
+    public static final String PRIVATE_OLDEST_MSG_ID_KEY = "history:private_oldest_msg_id:";
 }

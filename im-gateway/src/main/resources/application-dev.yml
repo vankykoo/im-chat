@@ -70,7 +70,7 @@ spring:
 
 im:
   token-secret: ${IM_TOKEN_SECRET}
-  skip-paths: /auth/login, /auth/oauth/login, /auth/oauth/to_login, /auth/oauth/gitee/login, /oauth2/authorization/gitee
+  skip-paths: /auth/login, /auth/oauth/login, /auth/oauth/to_login, /auth/oauth/gitee/login, /oauth2/authorization/gitee, /user/register
 
 # springdoc-openapi项目配置
 springdoc:
@@ -84,6 +84,9 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.vanky.chat
-#logging:
-#  level:
-#    root: debug
+
+logging:
+  file:
+    name: E:/im-log/im-gateway-log
+  pattern:
+    file: '%d{yyyy-MM-ddTHH:mm:ss.SSS} %-5level - %msg%n'

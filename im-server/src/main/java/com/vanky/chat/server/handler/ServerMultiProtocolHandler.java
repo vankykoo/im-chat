@@ -5,6 +5,7 @@ import com.vanky.chat.server.processor.LoginMsgProcessor;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateEvent;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +53,9 @@ public class ServerMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("上线了！=====》 " + ctx);
+
+        //NioSocketChannel nioSocketChannel = (NioSocketChannel) ctx.channel();
+        //String channelId = nioSocketChannel.id().toString();
     }
 
     @Override

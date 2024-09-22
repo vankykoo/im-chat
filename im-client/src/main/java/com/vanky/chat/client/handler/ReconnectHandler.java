@@ -38,7 +38,7 @@ public class ReconnectHandler {
             try {
                 log.info("正在尝试第 {} 次重连...", i);
 
-                channel = nettyClient.connect("localhost", 20003);
+                channel = nettyClient.connect(null, null, userId);
 
                 if (channel != null){
                     break;

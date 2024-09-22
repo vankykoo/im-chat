@@ -58,6 +58,10 @@ public class KafkaConfig {
 		return new NewTopic("groupMsg", 1, (short) 2);
 	}
 
+	@Bean NewTopic pushHistoryMsg(){
+		return new NewTopic("historyMsg", 1, (short) 2);
+	}
+
 	@Bean
 	public NewTopic pushOfflinePrivateMsg() {
 		return new NewTopic("offlinePrivateMsg", 1, (short) 2);

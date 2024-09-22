@@ -22,6 +22,7 @@ public class TypeEnum {
         SIMPLE_ACK_MSG(12),//普通ack
         HAS_READ_MSG(13), //表示客户端进入聊天框，阅读了所有已抵达的消息
         LOGOUT_MSG(14),//退出登录消息
+        HISTORY_MSG(15),// 历史消息
         ;
 
         private int value;

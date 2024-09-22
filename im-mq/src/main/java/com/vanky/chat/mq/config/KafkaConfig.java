@@ -16,6 +16,9 @@ import org.springframework.kafka.support.mapping.Jackson2JavaTypeMapper;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * kafka 配置类
+ */
 @Configuration
 public class KafkaConfig {
 

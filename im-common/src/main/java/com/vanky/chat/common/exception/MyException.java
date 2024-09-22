@@ -138,4 +138,17 @@ public class MyException {
         }
     }
 
+    /**
+     * 用户未连接到服务端
+     */
+    public static class NotConnectedException extends BaseException{
+        public NotConnectedException(){
+            super(ExceptionConstant.NOT_CONNECTED_EXCEPTION);
+        }
+
+        public NotConnectedException(String msg){
+            super(msg);
+        }
+    }
+
 }

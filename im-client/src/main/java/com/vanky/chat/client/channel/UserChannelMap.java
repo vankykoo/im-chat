@@ -19,10 +19,14 @@ public class UserChannelMap {
         reconnectHandler = SpringUtil.getBean("reconnectHandler", ReconnectHandler.class);
     }
 
-    //连接唯一标识id与用户id的映射
+    /**
+     * 连接唯一标识id与用户id的映射
+     */
     public static ConcurrentHashMap<String, Long> channelUserMap = new ConcurrentHashMap<>();
 
-    //用户id 与 连接 的映射
+    /**
+     * 用户id 与 连接 的映射
+     */
     public static ConcurrentHashMap<Long, NioSocketChannel> userChannel = new ConcurrentHashMap<>();
 
     //

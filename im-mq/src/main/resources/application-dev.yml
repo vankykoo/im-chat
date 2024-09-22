@@ -73,6 +73,12 @@ mybatis-plus:
     db-config:
       id-type: auto
 
+logging:
+  file:
+    name: E:/im-log/im-mq-log
+  pattern:
+    file: '%d{yyyy-MM-ddTHH:mm:ss.SSS} %-5level - %msg%n'
+
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
