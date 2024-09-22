@@ -6,6 +6,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * @author vanky
  * @create 2024/5/21 17:14
@@ -24,4 +26,11 @@ public interface RelationFeignClient {
     Result<Boolean> areUsersFriends(@RequestParam("fromUserId")Long fromUserId,
                                     @RequestParam("toUserId")Long toUserId);
 
+    /**
+     * 根据用户id获取好友列表
+     * @param userId
+     * @return
+     */
+    @GetMapping("/user/relation/getFriendsByUserId")
+    Result<List<Long>> getFriendsByUserId(@RequestParam("userId") Long userId);
 }

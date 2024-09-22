@@ -4,6 +4,8 @@ import com.vanky.chat.user.pojo.po.ImUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.vanky.chat.user.pojo.to.UserTo;
 
+import java.util.List;
+
 /**
 * @author 86180
 * @description 针对表【im_user】的数据库操作Service
@@ -38,6 +40,4 @@ public interface ImUserService extends IService<ImUser> {
      * @return
      */
     ImUser getByUserId(Long userId);
-
-
 }

@@ -67,7 +67,10 @@ public class ClientMsgHandler{
             case 15:
                 // 历史消息
                 clientMsgProxy.receiveHistoryMsg(nioSocketChannel, msg);
-
+                break;
+            case 16:
+                // 好友在线状态列表
+                clientMsgProxy.receiveOnlineFriendsList(nioSocketChannel, msg);
         }
 
         StringRedisUtil.put(receivedMsgKey, "", ReceivedMsgCache.CACHE_TIME, TimeUnit.MINUTES);

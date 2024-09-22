@@ -12,6 +12,7 @@ import com.vanky.chat.server.processor.LoginMsgProcessor;
 import com.vanky.chat.server.processor.PrivateMsgProcessor;
 import com.vanky.chat.server.utils.SendMsgUtil;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -51,7 +52,7 @@ public class ServerMsgHandler{
         switch (msgType){
             case 0:
                 //登录消息
-                loginMsgProcessor.registerLoginUser(msg, ctx.channel());
+                loginMsgProcessor.registerLoginUser(msg, (NioSocketChannel) ctx.channel());
                 //推送离线消息给用户
                 privateMsgProcessor.pushOfflineMsg(msg.getFromUserId());
                 groupMsgProcessor.pushOfflineMsg(msg.getFromUserId());

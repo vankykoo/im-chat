@@ -85,7 +85,7 @@ public class RedisUtil {
     /**
      * hash相关操作
      */
-    public static void hput(String hashKey, String key, Object value){
+    public static void  hput(String hashKey, String key, Object value){
         redisTemplate.opsForHash().put(hashKey, key, value);
     }
 

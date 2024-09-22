@@ -2,6 +2,9 @@ package com.vanky.chat.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vanky.chat.user.pojo.po.Relation;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 86180
@@ -10,7 +13,12 @@ import com.vanky.chat.user.pojo.po.Relation;
 * @Entity generator.domain.Relation
 */
 public interface RelationMapper extends BaseMapper<Relation> {
-
+    /**
+     * 根据用户id获取好友列表
+     * @param userId
+     * @return
+     */
+    List<Relation> selectFriendsByUserId(@Param("userId") Long userId);
 }
 
 

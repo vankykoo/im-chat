@@ -49,6 +49,22 @@ public class MsgGenerator {
         return builder.build();
     }
 
+    public BaseMsgProto.BaseMsg generateOnlineListMsg(Long userId, List<Long> friendsIdList){
+        String jsonString = JSONObject.toJSONString(friendsIdList);
+
+        BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
+        builder.setId(idGeneratorFeignClient.nextId().getData())
+                //.setChatType(chatType.getValue())
+                .setContent(CommonConverter.string2ByteString(jsonString))
+                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
+                .setFromUserId(userId)
+                //.setToUserId(toUserId)
+                .setCreateTime(new Date().getTime())
+                .setMsgType(TypeEnum.MsgType.ONLINE_FRIEND_LIST_MSG.getValue());
+
+        return builder.build();
+    }
+
     /**
      * 生成离线私信消息
      * @param offlineMsgInfo

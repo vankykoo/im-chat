@@ -1,5 +1,7 @@
 package com.vanky.chat.common.constant;
 
+import org.bouncycastle.cms.PasswordRecipientId;
+
 /**
  * @author vanky
  * @create 2024/3/29 10:56
@@ -23,6 +25,7 @@ public class TypeEnum {
         HAS_READ_MSG(13), //表示客户端进入聊天框，阅读了所有已抵达的消息
         LOGOUT_MSG(14),//退出登录消息
         HISTORY_MSG(15),// 历史消息
+        ONLINE_FRIEND_LIST_MSG(16),// 在线好友列表消息
         ;
 
         private int value;
@@ -67,6 +70,22 @@ public class TypeEnum {
 
         public int getValue() {
             return value;
+        }
+    }
+
+    public enum UserStatus{
+        OFFLINE(0),// 不在线
+        ONLINE(1), // 在线
+        ;
+
+        private int status;
+
+        UserStatus(int status){
+            this.status = status;
+        }
+
+        public int getStatus(){
+            return status;
         }
     }
 

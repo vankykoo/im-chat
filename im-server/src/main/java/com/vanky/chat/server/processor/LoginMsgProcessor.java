@@ -14,6 +14,8 @@ import com.vanky.chat.server.service.GroupUserService;
 import com.vanky.chat.server.session.ChannelUserMap;
 import com.vanky.chat.server.session.ChatSession;
 import com.vanky.chat.server.session.ChatSessionMap;
+import com.vanky.chat.server.utils.MsgGenerator;
+import com.vanky.chat.server.utils.SendMsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
@@ -39,19 +41,21 @@ public class LoginMsgProcessor {
     @Resource
     private CommonMsgGenerator commonMsgGenerator;
 
-    public void registerLoginUser(BaseMsgProto.BaseMsg msg, Channel channel){
+    @Resource
+    private OnlineUserProcessor onlineUserProcessor;
+
+    @Resource
+    private MsgGenerator msgGenerator;
+
+    public void registerLoginUser(BaseMsgProto.BaseMsg msg, NioSocketChannel channel){
         //1.保存到本地服务器
-        //todo 这里userBo没存好
-        UserBo userBo = new UserBo();
-        ChatSession chatSession = new ChatSession(channel, userBo);
         long userId = msg.getFromUserId();
-        ChatSessionMap.chatSessionMap.put(userId, chatSession);
+        ChatSessionMap.chatSessionMap.put(userId, channel);
         ChannelUserMap.channelUserMap.put(channel.id().asLongText(), userId);
 
         //2.保存到redis
-        NioSocketChannel nioSocketChannel = (NioSocketChannel) channel;
-        String host = nioSocketChannel.localAddress().getHostString();
-        int port = nioSocketChannel.localAddress().getPort();
+        String host = channel.localAddress().getHostString();
+        int port = channel.localAddress().getPort();
         String sessionUid = UUID.randomUUID().toString();
         GlobalChatSessionBo globalChatSessionBo = new GlobalChatSessionBo(host, port, sessionUid, userId);
 
@@ -72,6 +76,11 @@ public class LoginMsgProcessor {
         //4.发送ack消息
         BaseMsgProto.BaseMsg ackMsg = commonMsgGenerator.generateAckMsg(msg, TypeEnum.MsgType.ACK_MSG.getValue());
         channel.writeAndFlush(ackMsg);
+
+        //5. 推送在线好友id
+        List<Long> onlineUserList = onlineUserProcessor.getOnlineUser(userId);
+        BaseMsgProto.BaseMsg onlineListMsg = msgGenerator.generateOnlineListMsg(userId, onlineUserList);
+        SendMsgUtil.sendMsg4Ack(onlineListMsg, userId);
 
         log.info("收到用户id = 【{}】的登录信息", userId);
     }

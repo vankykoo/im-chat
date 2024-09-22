@@ -13,7 +13,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public class SessionUtil {
 
-    public void put(Long userId, ChatSession chatSession){
+    /*public void put(Long userId, ChatSession chatSession){
         ChatSessionMap.chatSessionMap.put(userId, chatSession);
 
         //存到redis中
@@ -21,7 +21,7 @@ public class SessionUtil {
         GlobalChatSession globalChatSession = chatSession2GlobalChatSession(chatSession);
 
         RedisUtil.sput(key, globalChatSession);
-    }
+    }*/
 
 
     /**

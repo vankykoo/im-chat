@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author vanky
  * @create 2024/3/25 21:13
@@ -70,7 +72,4 @@ public class UserController {
 
         return Result.success(imUserBo);
     }
-
-
-
 }

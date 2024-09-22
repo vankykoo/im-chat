@@ -3,18 +3,22 @@ package com.vanky.chat.client.controller;
 import com.vanky.chat.client.netty.NettyClient;
 import com.vanky.chat.client.channel.UserChannelMap;
 import com.vanky.chat.client.processor.LoginMsgProcessor;
-import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.common.ApplicationContext;
+import com.vanky.chat.common.cache.OnlineCache;
+import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.exception.MyException;
-import com.vanky.chat.common.protobuf.BaseMsgProto;
+import com.vanky.chat.common.feign.userFeign.RelationFeignClient;
 import com.vanky.chat.common.response.Result;
+import com.vanky.chat.common.utils.RedisUtil;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author vanky
@@ -32,15 +36,29 @@ public class UserLoginController {
     @Resource
     private LoginMsgProcessor loginMsgProcessor;
 
+    @Resource
+    private RelationFeignClient relationFeignClient;
+
     @GetMapping ("/connect")
     @Operation(summary = "用户登录")
     public Result connect(@RequestParam("userId") Long userId){
-        NioSocketChannel channel = nettyClient.connect(null, null, userId);
+        // 与默认服务端连接
+        nettyClient.connect(null, null, userId);
 
         //todo 登录前检查本地有没有私钥，如果没有就要生成，而且把公钥传给客户端
 
-        //这里发送一个登录的消息
-        loginMsgProcessor.sendLoginMsg(userId, channel);
+        // 获取好友列表
+        Result<List<Long>> result = relationFeignClient.getFriendsByUserId(userId);
+        if (!result.isSuccess()){
+            throw new MyException.FeignProcessException();
+        }
+        List<Long> friendsIdList = result.getData();
+        String friendsCacheKey = OnlineCache.FRIEND_ID_LIST + userId;
+
+        // 好友列表先列为未登录
+        for (Long id : friendsIdList) {
+            RedisUtil.hput(friendsCacheKey, id.toString(), TypeEnum.UserStatus.OFFLINE.getStatus());
+        }
 
         ApplicationContext.setUserId(userId);
 

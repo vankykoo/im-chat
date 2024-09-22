@@ -38,6 +38,9 @@ public class ClientMsgProxy {
     @Resource
     private MsgEncryptUtil msgEncryptUtil;
 
+    @Resource
+    private LoginMsgProcessor loginMsgProcessor;
+
     public void receiveSimpleMsg(NioSocketChannel nioSocketChannel, BaseMsgProto.BaseMsg msg, Long currentClientUserId){
         if (msg.getChatType() == TypeEnum.ChatType.GROUP_CHAT.getValue()){
             groupMsgProcessor.receivedGroupMsg(msg, currentClientUserId, nioSocketChannel);
@@ -138,6 +141,14 @@ public class ClientMsgProxy {
     public void receiveHistoryMsg(NioSocketChannel nioSocketChannel, BaseMsgProto.BaseMsg msg) {
         // 处理
         privateMsgProcessor.historyMsg(msg);
+
+        // 发送ack消息
+        SendAckMsgUtil.sendAckMsg(msg, nioSocketChannel, TypeEnum.MsgType.SIMPLE_ACK_MSG.getValue());
+    }
+
+    public void receiveOnlineFriendsList(NioSocketChannel nioSocketChannel, BaseMsgProto.BaseMsg msg) {
+        // 打印
+        loginMsgProcessor.receiveOnlineFriendsIdList(msg);
 
         // 发送ack消息
         SendAckMsgUtil.sendAckMsg(msg, nioSocketChannel, TypeEnum.MsgType.SIMPLE_ACK_MSG.getValue());

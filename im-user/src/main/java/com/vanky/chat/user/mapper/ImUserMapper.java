@@ -2,8 +2,11 @@ package com.vanky.chat.user.mapper;
 
 import com.vanky.chat.user.pojo.po.ImUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.vanky.chat.user.pojo.po.Relation;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
 * @author 86180

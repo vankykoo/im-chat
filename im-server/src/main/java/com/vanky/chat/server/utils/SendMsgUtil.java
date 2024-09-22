@@ -30,7 +30,7 @@ public class SendMsgUtil {
     public static void sendMsg4Ack(Channel channel, BaseMsgProto.BaseMsg msg){
         channel.writeAndFlush(msg);
 
-        waitAckUtil.saveWaitingAckMsgDetail(msg, msg.getUniqueId());
+        waitAckUtil.saveWaitingAckMsgDetail(msg, msg.getId());
     }
 
     /**
@@ -40,13 +40,13 @@ public class SendMsgUtil {
     public static void sendMsg4Ack(BaseMsgProto.BaseMsg baseMsg){
         ChatSessionMap.sendMessage(baseMsg.getToUserId(), baseMsg);
 
-        waitAckUtil.saveWaitingAckMsgDetail(baseMsg, baseMsg.getUniqueId());
+        waitAckUtil.saveWaitingAckMsgDetail(baseMsg, baseMsg.getId());
     }
 
     public static void sendMsg4Ack(BaseMsgProto.BaseMsg baseMsg, Long toUserId){
         ChatSessionMap.sendMessage(toUserId, baseMsg);
 
-        waitAckUtil.saveWaitingAckMsgDetail(baseMsg, baseMsg.getUniqueId());
+        waitAckUtil.saveWaitingAckMsgDetail(baseMsg, baseMsg.getId());
     }
 
     /**
