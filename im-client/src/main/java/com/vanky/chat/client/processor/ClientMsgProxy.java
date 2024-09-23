@@ -153,4 +153,11 @@ public class ClientMsgProxy {
         // 发送ack消息
         SendAckMsgUtil.sendAckMsg(msg, nioSocketChannel, TypeEnum.MsgType.SIMPLE_ACK_MSG.getValue());
     }
+
+    public void receiveFriendStatusChangeMsg(NioSocketChannel nioSocketChannel, BaseMsgProto.BaseMsg msg) {
+        loginMsgProcessor.receiveFriendStatusChangeMsg(msg);
+
+        // 发送ack
+        SendAckMsgUtil.sendAckMsg(msg, nioSocketChannel, TypeEnum.MsgType.SIMPLE_ACK_MSG.getValue());
+    }
 }

@@ -42,9 +42,6 @@ public class UserLoginController {
     @GetMapping ("/connect")
     @Operation(summary = "用户登录")
     public Result connect(@RequestParam("userId") Long userId){
-        // 与默认服务端连接
-        nettyClient.connect(null, null, userId);
-
         //todo 登录前检查本地有没有私钥，如果没有就要生成，而且把公钥传给客户端
 
         // 获取好友列表
@@ -59,6 +56,9 @@ public class UserLoginController {
         for (Long id : friendsIdList) {
             RedisUtil.hput(friendsCacheKey, id.toString(), TypeEnum.UserStatus.OFFLINE.getStatus());
         }
+
+        // 与默认服务端连接
+        nettyClient.connect(null, null, userId);
 
         ApplicationContext.setUserId(userId);
 

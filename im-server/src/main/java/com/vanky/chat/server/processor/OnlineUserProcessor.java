@@ -5,6 +5,10 @@ import com.vanky.chat.common.exception.MyException;
 import com.vanky.chat.common.feign.userFeign.RelationFeignClient;
 import com.vanky.chat.common.response.Result;
 import com.vanky.chat.common.utils.RedisUtil;
+import com.vanky.chat.server.pojo.BaseMsg;
+import com.vanky.chat.server.push.PushProxy;
+import com.vanky.chat.server.session.ChannelUserMap;
+import com.vanky.chat.server.utils.MsgGenerator;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,12 @@ public class OnlineUserProcessor {
 
     @Resource
     private RelationFeignClient relationFeignClient;
+
+    @Resource
+    private MsgGenerator msgGenerator;
+
+    @Resource
+    private PushProxy pushProxy;
 
     // 1.获取用户在线的好友
     public List<Long> getOnlineUser(Long userId){
@@ -48,5 +58,32 @@ public class OnlineUserProcessor {
         return onlineUserIds;
     }
 
+    /**
+     * 用户在线状态改变，需要推送给好友
+     * @param userId
+     * @param status
+     */
+    public void userStatusChange(Long userId, int status){
+        // 获取在线的好友
+        List<Long> onlineUser = getOnlineUser(userId);
+
+        // 推送消息
+        for (Long friendId : onlineUser) {
+            BaseMsg baseMsg = msgGenerator.generateUserStatusChangeMsg(userId, friendId, status);
+
+            pushProxy.pushMsg(baseMsg, "userStatusChangeMsg", "userStatusChangeKey");
+        }
+    }
+
+    /**
+     * 用户状态改变（针对离线）
+     * @param channelId
+     * @param status
+     */
+    public void userStatusChange(String channelId, int status){
+        Long userId = ChannelUserMap.channelUserMap.get(channelId);
+
+        userStatusChange(userId, status);
+    }
 
 }

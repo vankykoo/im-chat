@@ -65,4 +65,21 @@ public class LoginMsgProcessor {
     }
 
 
+    public void receiveFriendStatusChangeMsg(BaseMsgProto.BaseMsg msg) {
+        // 修改 redis 好友的状态
+        int status = Integer.parseInt(CommonConverter.byteString2String(msg.getContent()));
+
+        String friendStatusMapKey = OnlineCache.FRIEND_ID_LIST + msg.getToUserId();
+
+        RedisUtil.hput(friendStatusMapKey, Long.toString(msg.getFromUserId()), status);
+
+        String m = "";
+        if (status == 1){
+            m = "上线了";
+        }else {
+            m = "下线了";
+        }
+
+        log.info("收到用户在线状态改变消息 {} --- {}",msg.getFromUserId(), m);
+    }
 }

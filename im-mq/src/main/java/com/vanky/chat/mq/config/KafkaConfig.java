@@ -60,6 +60,16 @@ public class KafkaConfig {
 	}
 
 	@Bean
+	public NewTopic pushUserStatusChangeMsg(){
+		return new NewTopic("userStatusChangeMsg", 1, (short) 2);
+	}
+
+	@Bean
+	public NewTopic pushHistoryMsg(){
+		return new NewTopic("historyMsg", 1, (short) 2);
+	}
+
+	@Bean
 	public NewTopic pushOfflinePrivateMsg() {
 		return new NewTopic("offlinePrivateMsg", 1, (short) 2);
 	}

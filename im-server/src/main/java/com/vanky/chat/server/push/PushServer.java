@@ -3,25 +3,19 @@ package com.vanky.chat.server.push;
 import com.google.protobuf.ByteString;
 import com.vanky.chat.common.bo.BaseMsgBo;
 import com.vanky.chat.common.bo.GlobalChatSessionBo;
-import com.vanky.chat.common.cache.OnlineCache;
 import com.vanky.chat.common.cache.RedisCacheKey;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.utils.MsgEncryptUtil;
 import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.pojo.BaseMsg;
 import com.vanky.chat.server.pojo.GroupMsg;
-import com.vanky.chat.server.pojo.GroupUser;
-import com.vanky.chat.server.processor.PrivateMsgProcessor;
 import com.vanky.chat.server.service.GroupMsgService;
 import com.vanky.chat.server.service.GroupUserService;
 import com.vanky.chat.server.service.OfflineMsgService;
-import com.vanky.chat.server.session.ChatSession;
 import com.vanky.chat.server.session.ChatSessionMap;
-import com.vanky.chat.server.session.GlobalChatSession;
 import com.vanky.chat.server.utils.MsgGenerator;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.cache.CacheKey;
 import org.springframework.beans.BeanUtils;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
@@ -106,20 +100,36 @@ public class PushServer {
     @KafkaListener(topics = "historyMsg")
     public void historyMsgListener(@Payload BaseMsgBo baseMsgBo, Acknowledgment acknowledgment){
         // 1. 判断用户是否在线
-        //GlobalChatSessionBo globalChatSessionBo = ifUserOnline(baseMsgBo.getToUserId());
+        GlobalChatSessionBo globalChatSessionBo = ifUserOnline(baseMsgBo.getToUserId());
 
         // todo 2. 在线：直接推送
-        //if (globalChatSessionBo != null){
+        if (globalChatSessionBo != null){
             BaseMsg baseMsg = new BaseMsg();
             BeanUtils.copyProperties(baseMsgBo, baseMsg);
 
             pushWorker.pushHistoryMsg(baseMsg);
-        //}else {
-            // 3. 不在线： 不推送了
-        //    log.warn("用户不在线，历史消息无法推送~");
-        //}
+        }else {
+             //3. 不在线： 不推送了
+            log.warn("用户不在线，历史消息无法推送~");
+        }
 
         //手动提交
+        acknowledgment.acknowledge();
+    }
+
+    /**
+     * 监听用户状态改变通知消息
+     * @param baseMsgBo
+     * @param acknowledgment
+     */
+    @KafkaListener(topics = "userStatusChangeMsg")
+    public void userStatusChangeMsgListener(@Payload BaseMsgBo baseMsgBo, Acknowledgment acknowledgment){
+        BaseMsg baseMsg = new BaseMsg();
+        BeanUtils.copyProperties(baseMsgBo, baseMsg);
+
+        pushWorker.pushUserStatusChangeMsg(baseMsg);
+
+        // 手动提交
         acknowledgment.acknowledge();
     }
 

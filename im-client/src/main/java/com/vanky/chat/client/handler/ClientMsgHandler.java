@@ -71,6 +71,10 @@ public class ClientMsgHandler{
             case 16:
                 // 好友在线状态列表
                 clientMsgProxy.receiveOnlineFriendsList(nioSocketChannel, msg);
+                break;
+            case 17:
+                // 接收好友在线状态改变
+                clientMsgProxy.receiveFriendStatusChangeMsg(nioSocketChannel, msg);
         }
 
         StringRedisUtil.put(receivedMsgKey, "", ReceivedMsgCache.CACHE_TIME, TimeUnit.MINUTES);

@@ -26,6 +26,7 @@ public class TypeEnum {
         LOGOUT_MSG(14),//退出登录消息
         HISTORY_MSG(15),// 历史消息
         ONLINE_FRIEND_LIST_MSG(16),// 在线好友列表消息
+        USER_STATUS_CHANGE(17), // 用户在线状态改变
         ;
 
         private int value;
@@ -42,6 +43,7 @@ public class TypeEnum {
     public enum ChatType{
         PRIVATE_CHAT(0), //私聊
         GROUP_CHAT(1), //群聊
+        OTHER_CHAT(2)
         ;
 
         private int value;

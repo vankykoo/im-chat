@@ -12,11 +12,9 @@ import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.pojo.GroupUser;
 import com.vanky.chat.server.service.GroupUserService;
 import com.vanky.chat.server.session.ChannelUserMap;
-import com.vanky.chat.server.session.ChatSession;
 import com.vanky.chat.server.session.ChatSessionMap;
 import com.vanky.chat.server.utils.MsgGenerator;
 import com.vanky.chat.server.utils.SendMsgUtil;
-import io.netty.channel.Channel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -82,6 +80,9 @@ public class LoginMsgProcessor {
         BaseMsgProto.BaseMsg onlineListMsg = msgGenerator.generateOnlineListMsg(userId, onlineUserList);
         SendMsgUtil.sendMsg4Ack(onlineListMsg, userId);
 
+        //6. 将自己上线的消息推送给自己的好友
+        onlineUserProcessor.userStatusChange(userId, TypeEnum.UserStatus.ONLINE.getStatus());
+
         log.info("收到用户id = 【{}】的登录信息", userId);
     }
 
@@ -116,5 +117,7 @@ public class LoginMsgProcessor {
 
             RedisUtil.sdel(cacheKey, groupUser.getUserId());
         }
+
+        onlineUserProcessor.userStatusChange(userId, TypeEnum.UserStatus.OFFLINE.getStatus());
     }
 }

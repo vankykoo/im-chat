@@ -60,6 +60,23 @@ public class PushProxy {
         }
     }
 
+    public void pushMsg(BaseMsg baseMsg, String kafkaTopic, String kafkaKey){
+        BaseMsgBo baseMsgBo = new BaseMsgBo();
+        BeanUtils.copyProperties(baseMsg, baseMsgBo);
+
+        try {
+            SendResult<String, BaseMsgBo> sendResult = kafkaTemplate
+                    .send(kafkaTopic, kafkaKey, baseMsgBo).get();
+
+            log.info("PushProxy 成功存入消息推送请求到kafka ：{} --> {}",
+                    sendResult.getProducerRecord().topic(), sendResult.getProducerRecord().value().toString());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //2.推送 群聊请求
     public void groupMsg(BaseMsg baseMsg){
         BaseMsgBo baseMsgBo = new BaseMsgBo();

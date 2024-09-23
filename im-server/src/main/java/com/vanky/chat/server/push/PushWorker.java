@@ -70,4 +70,10 @@ public class PushWorker {
 
         SendMsgUtil.sendMsg4Ack(msg, baseMsg.getToUserId());
     }
+
+    public void pushUserStatusChangeMsg(BaseMsg baseMsg){
+        BaseMsgProto.BaseMsg msg = BaseMsg.BaseMsg2Proto(baseMsg);
+
+        SendMsgUtil.sendMsg4Ack(msg, baseMsg.getToUserId());
+    }
 }

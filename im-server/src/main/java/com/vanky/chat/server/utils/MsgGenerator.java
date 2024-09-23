@@ -264,4 +264,25 @@ public class MsgGenerator {
                 .status(TypeEnum.MsgStatus.HAS_NOT_READ.getValue())
                 .build();
     }
+
+    /**
+     * 生成用户状态改变通知消息
+     * @param fromUserId
+     * @param toUserId
+     * @param status
+     * @return
+     */
+    public BaseMsg generateUserStatusChangeMsg(Long fromUserId, Long toUserId, int status) {
+        return BaseMsg.builder()
+                .id(idGeneratorFeignClient.nextId().getData())
+                .chatType(TypeEnum.ChatType.OTHER_CHAT.getValue())
+                .content(Integer.toString(status).getBytes())
+                //.uniqueId(idGeneratorFeignClient.nextId().getData())
+                .fromUserId(fromUserId)
+                .toUserId(toUserId)
+                .createTime(new Date())
+                .msgType(TypeEnum.MsgType.USER_STATUS_CHANGE.getValue())
+                .status(TypeEnum.MsgStatus.NOT_SENT.getValue())
+                .build();
+    }
 }
