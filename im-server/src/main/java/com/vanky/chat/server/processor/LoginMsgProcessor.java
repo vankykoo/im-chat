@@ -13,6 +13,7 @@ import com.vanky.chat.server.pojo.GroupUser;
 import com.vanky.chat.server.service.GroupUserService;
 import com.vanky.chat.server.session.ChannelUserMap;
 import com.vanky.chat.server.session.ChatSessionMap;
+import com.vanky.chat.server.utils.LogUtil;
 import com.vanky.chat.server.utils.MsgGenerator;
 import com.vanky.chat.server.utils.SendMsgUtil;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -58,7 +59,6 @@ public class LoginMsgProcessor {
         GlobalChatSessionBo globalChatSessionBo = new GlobalChatSessionBo(host, port, sessionUid, userId);
 
         String key = ChannelCache.GLOBAL_CHAT_SESSION_PREFIX + userId;
-
         RedisUtil.put(key, globalChatSessionBo, 2, TimeUnit.HOURS);
 
         //3.保存每个群在线的用户
@@ -83,7 +83,8 @@ public class LoginMsgProcessor {
         //6. 将自己上线的消息推送给自己的好友
         onlineUserProcessor.userStatusChange(userId, TypeEnum.UserStatus.ONLINE.getStatus());
 
-        log.info("收到用户id = 【{}】的登录信息", userId);
+        // 记录日志
+        LogUtil.logging2Login(globalChatSessionBo, channel.id().asLongText());
     }
 
 
