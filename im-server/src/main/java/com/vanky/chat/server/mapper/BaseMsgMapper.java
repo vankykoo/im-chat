@@ -27,12 +27,12 @@ public interface BaseMsgMapper extends BaseMapper<BaseMsg> {
      * 消息设为未读/已送达
      * @param uniqueId
      */
-    @Update("update base_msg set status = 0 where unique_id = #{uniqueId}")
+    @Update("update base_msg set status = 0 where id = #{uniqueId}")
     void setHasNotReadByUniqueId(@Param("uniqueId") Long uniqueId);
 
     void setHasNotReadByUniqueIds(@Param("uniqueIds") List<Long> uniqueIds);
 
-    @Select("select * from base_msg where unique_id = #{uniqueId};")
+    @Select("select * from base_msg where id = #{uniqueId};")
     BaseMsg selectByUniqueId(@Param("uniqueId") Long uniqueId);
 
     /**

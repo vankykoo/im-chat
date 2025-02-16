@@ -1,7 +1,7 @@
 package com.vanky.chat.leaf.controller;
 
-import com.vanky.chat.common.feign.leafFeign.IdGeneratorFeignClient;
 import com.vanky.chat.common.response.Result;
+import com.vanky.chat.leaf.utils.CachedIdUtil;
 import com.vanky.chat.leaf.utils.SnowflakeIdWorker;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
@@ -25,11 +25,7 @@ public class IdGeneratorController{
     @GetMapping(value = "/nextId")
     @Operation(summary = "生成id")
     public Result<Long> nextId(){
-        long id = snowflakeIdWorker.nextId();
-
-        log.info("生成全局唯一且递增id ：{}", id);
-
-        return Result.success(id);
+        return Result.success(snowflakeIdWorker.nextId());
     }
 
 }

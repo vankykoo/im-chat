@@ -43,6 +43,10 @@ public class ClientMsgHandler{
                 // ack消息
                 clientMsgProxy.receiveAckMsg(msg);
                 break;
+            case 4:
+                // pong消息
+                log.info("接收到服务端的心跳包 pong");
+                break;
             case 5:
                 // 接收到转发消息
                 clientMsgProxy.receiveForwardMsg(nioSocketChannel, msg);

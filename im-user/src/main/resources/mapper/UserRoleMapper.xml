@@ -13,4 +13,11 @@
     <sql id="Base_Column_List">
         id,user_id,role_id
     </sql>
+
+    <select id="selectByUserId" resultType="com.vanky.chat.user.pojo.po.UserRole">
+        select
+            *
+        from user_role
+        where user_id = #{userId}
+    </select>
 </mapper>

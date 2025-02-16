@@ -18,11 +18,21 @@ public class MsgGenerator {
     @Resource
     private IdGeneratorFeignClient idGeneratorFeignClient;
 
+    public BaseMsgProto.BaseMsg generatePingMsg(){
+        BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
+
+        builder.setId(idGeneratorFeignClient.nextId().getData())
+                .setCreateTime(System.currentTimeMillis())
+                .setMsgType(TypeEnum.MsgType.PING_MSG.getValue());
+
+        return builder.build();
+    }
+
     public BaseMsgProto.BaseMsg generateLoginMsg(Long userId){
         BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
 
         builder.setId(idGeneratorFeignClient.nextId().getData())
-                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
+                .setUniqueId(idGeneratorFeignClient.nextId().getData())
                 .setCreateTime(System.currentTimeMillis())
                 .setFromUserId(userId)
                 .setMsgType(TypeEnum.MsgType.LOGIN_MSG.getValue());
@@ -61,7 +71,7 @@ public class MsgGenerator {
                 .setChatType(TypeEnum.ChatType.GROUP_CHAT.getValue())
                 .setContent(groupMsgBo.getContent())
                 //唯一id生成
-                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
+                .setUniqueId(idGeneratorFeignClient.nextId().getData())
                 .setFromUserId(groupMsgBo.getFromUserId())
                 .setToUserId(groupMsgBo.getGroupId())
                 .setCreateTime(System.currentTimeMillis())

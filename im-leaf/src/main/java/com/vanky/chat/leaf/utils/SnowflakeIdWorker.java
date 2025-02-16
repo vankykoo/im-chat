@@ -83,6 +83,9 @@ public class SnowflakeIdWorker {
     }
     /**
      * 获得下一个ID (该方法是线程安全的)
+     * +-----------+----------------------+----------------+----------+
+     * | 1位符号位  | 41位时间戳           | 10位机器标识   | 12位序列号    |
+     * +-----------+----------------------+----------------+----------+
      * @return SnowflakeId
      */
     public synchronized long nextId() {
@@ -92,6 +95,7 @@ public class SnowflakeIdWorker {
             throw new RuntimeException(
                     String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
         }
+
         // 如果是同一时间生成的，则进行毫秒内序列
         if (lastTimestamp == timestamp) {
             sequence = (sequence + 1) & sequenceMask;
@@ -100,13 +104,14 @@ public class SnowflakeIdWorker {
                 //阻塞到下一个毫秒,获得新的时间戳
                 timestamp = tilNextMillis(lastTimestamp);
             }
-        }
-        // 时间戳改变，毫秒内序列重置
-        else {
+        } else {
+            // 时间戳改变，毫秒内序列重置
             sequence = 0L;
         }
-        // 上次生成ID的时间截
+
+        // 更新上次生成ID的时间截
         lastTimestamp = timestamp;
+
         // 移位并通过或运算拼到一起组成64位的ID
         return ((timestamp - startTimestamp) << timestampLeftShift) //
                 | (datacenterId << datacenterIdShift) //
@@ -125,6 +130,7 @@ public class SnowflakeIdWorker {
         }
         return now;
     }
+
     /**
      * 返回以毫秒为单位的当前时间
      * @return 当前时间(毫秒)

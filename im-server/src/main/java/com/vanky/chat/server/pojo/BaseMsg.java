@@ -36,7 +36,8 @@ public class BaseMsg implements Serializable {
     /**
      * 消息唯一id
      */
-    @TableField(value = "unique_id")
+    //@TableField(value = "unique_id")
+    @TableField(exist = false)
     private Long uniqueId;
 
     /**
@@ -107,7 +108,7 @@ public class BaseMsg implements Serializable {
         builder.setId(baseMsg.getId())
                 .setChatType(baseMsg.getChatType())
                 .setContent(byteStringContent)
-                //.setUniqueId(baseMsg.getUniqueId())
+                .setUniqueId(baseMsg.getUniqueId() == null ? 0L : baseMsg.getUniqueId())
                 .setFromUserId(baseMsg.getFromUserId())
                 .setToUserId(baseMsg.getToUserId())
                 .setCreateTime(baseMsg.getCreateTime().getTime())

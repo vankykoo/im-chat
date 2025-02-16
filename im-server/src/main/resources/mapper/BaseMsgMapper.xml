@@ -7,7 +7,7 @@
 
     <update id="setHasNotReadByUniqueIds">
         update base_msg set status = 0
-        where unique_id in
+        where id in
         <foreach collection="uniqueIds" item="uniqueId" open="(" close=")" separator=",">
             #{uniqueId}
         </foreach>
@@ -22,7 +22,7 @@
 
     <update id="setHasReadByUniqueId">
         update base_msg set status = 1
-        where unique_id
+        where id
         in
         <foreach collection="uniqueIds" item="uniqueId" open="(" close=")" separator=",">
             #{uniqueId}
@@ -37,7 +37,7 @@
     </select>
 
     <select id="getBaseMsgByFromUserIdAndToUserId" parameterType="list" resultType="java.lang.Long">
-        select unique_id from base_msg
+        select id from base_msg
          where from_user_id = #{fromUserId}
            and to_user_id = #{toUserId}
            and 'status' = 0

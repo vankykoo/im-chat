@@ -84,7 +84,7 @@ public class MsgGenerator {
                 .content(byteString.toByteArray())
                 .fromUserId(offlineMsgInfo.getFromUserId())
                 .toUserId(toUserId)
-                .uniqueId(idGeneratorFeignClient.nextId().getData())
+                //.uniqueId(idGeneratorFeignClient.nextId().getData())
                 .createTime(new Date())
                 .msgType(TypeEnum.MsgType.OFFLINE_PRIVATE_MSG_INFO.getValue())
                 .status(TypeEnum.MsgStatus.NOT_SENT.getValue())
@@ -139,7 +139,7 @@ public class MsgGenerator {
                 .id(idGeneratorFeignClient.nextId().getData())
                 .chatType(TypeEnum.ChatType.PRIVATE_CHAT.getValue())
                 .content(byteString.toByteArray())
-                .uniqueId(idGeneratorFeignClient.nextId().getData())
+                //.uniqueId(idGeneratorFeignClient.nextId().getData())
                 .fromUserId(fromUserId)
                 .toUserId(toUserId)
                 .createTime(new Date())
@@ -230,10 +230,10 @@ public class MsgGenerator {
      */
     public BaseMsg generateForwardMsg(String address, BaseMsg baseMsg, Long toUserId) {
         BaseMsg.builder()
-                .uniqueId(idGeneratorFeignClient.nextId().getData())
+                //.uniqueId(idGeneratorFeignClient.nextId().getData())
                 .toUserId(toUserId)
                 .chatType(baseMsg.getChatType())
-                .content((address + "_" + baseMsg.getUniqueId()).getBytes())
+                .content((address + "_" + baseMsg.getId()).getBytes())
                 .msgType(TypeEnum.MsgType.FORWARD_MSG.getValue())
                 .createTime(new Date())
                 .build();

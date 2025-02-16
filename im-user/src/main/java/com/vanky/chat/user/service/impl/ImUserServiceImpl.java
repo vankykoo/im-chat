@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vanky.chat.common.bo.DHPrivateKeyBO;
 import com.vanky.chat.common.bo.KeyPairBo;
 import com.vanky.chat.common.cache.RedisCacheKey;
+import com.vanky.chat.common.constant.UserRoleKeys;
 import com.vanky.chat.common.exception.MyException;
 import com.vanky.chat.common.feign.leafFeign.IdGeneratorFeignClient;
 import com.vanky.chat.common.utils.DHKeyUtil;
@@ -14,6 +15,7 @@ import com.vanky.chat.user.pojo.po.*;
 import com.vanky.chat.user.pojo.to.UserTo;
 import com.vanky.chat.user.service.ImUserService;
 import com.vanky.chat.user.mapper.ImUserMapper;
+import com.vanky.chat.user.service.UserRoleService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +43,9 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
 
     @Resource
     private PermissionMapper permissionMapper;
+
+    @Resource
+    private UserRoleService userRoleService;
 
     @Resource
     private IdGeneratorFeignClient idGeneratorFeignClient;
@@ -87,11 +92,11 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
         String password = passwordEncoder.encode(userTo.getPassword());
 
         //3.生成公钥私钥
+        ImUser user = new ImUser(userTo.getUsername(), password);
         try {
             KeyPairBo keyPairBo = DHKeyUtil.generateKeyPair();
             String publicKey = new BigInteger(keyPairBo.getPublicKey()).toString();
 
-            ImUser user = new ImUser(userTo.getUsername(), password);
             user.setPublicKey(publicKey);
             user.setUserId(idGeneratorFeignClient.nextId().getData());
             this.save(user);
@@ -101,10 +106,15 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
             DHPrivateKeyBO dhPrivateKeyBO = new DHPrivateKeyBO(privateKey.getX(), privateKey.getParams().getP(), privateKey.getParams().getG());
             RedisUtil.put(privateKeyCache, dhPrivateKeyBO);
 
+
+
             log.info("用户注册成功：{} ---> {}", user.getUserId(), user.getUsername());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        // 设置用户权限
+        userRoleService.updateUserRole(user.getUserId(), UserRoleKeys.SIMPLE_USER);
 
         return true;
     }

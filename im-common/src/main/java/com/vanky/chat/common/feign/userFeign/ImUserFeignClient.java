@@ -4,7 +4,6 @@ import com.vanky.chat.common.bo.ImUserBo;
 import com.vanky.chat.common.config.FeignRequestInterceptor;
 import com.vanky.chat.common.response.Result;
 import com.vanky.chat.common.to.UserTo;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

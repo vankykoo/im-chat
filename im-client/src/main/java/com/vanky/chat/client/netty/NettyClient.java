@@ -5,6 +5,7 @@ import com.vanky.chat.client.handler.ClientMultiProtocolDecoder;
 import com.vanky.chat.client.handler.ClientMultiProtocolEncoder;
 import com.vanky.chat.client.handler.ClientMultiProtocolHandler;
 import com.vanky.chat.client.processor.LoginMsgProcessor;
+import com.vanky.chat.common.protobuf.BaseMsgProto;
 import feign.Client;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,7 +15,9 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -35,6 +38,12 @@ public class NettyClient {
     @Resource
     @Lazy
     private ClientMultiProtocolHandler clientMultiProtocolHandler;
+
+    @Resource
+    private ProtobufEncoder protobufEncoder;
+
+    @Resource
+    private ProtobufVarint32LengthFieldPrepender protobufVarint32LengthFieldPrepender;
 
     @Value("${im.server.host}")
     private String host;
@@ -73,11 +82,15 @@ public class NettyClient {
                          */
                         pipeline.addLast(new IdleStateHandler(20, 10, 0, TimeUnit.MINUTES));
                         //解码器
-                        pipeline.addLast("clientMultiProtocolDecoder", new ClientMultiProtocolDecoder());
+                        pipeline.addLast(new ProtobufVarint32FrameDecoder());
+                        pipeline.addLast(new ProtobufDecoder(BaseMsgProto.BaseMsg.getDefaultInstance()));
+
                         //处理器
                         pipeline.addLast("clientMultiProtocolHandler", clientMultiProtocolHandler);
+
                         //编码器
-                        pipeline.addLast("clientMultiProtocolEncoder", new ClientMultiProtocolEncoder());
+                        pipeline.addLast(protobufVarint32LengthFieldPrepender);
+                        pipeline.addLast(protobufEncoder);
                     }
                 });
 

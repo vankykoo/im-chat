@@ -2,6 +2,7 @@ package com.vanky.chat.user.mapper;
 
 import com.vanky.chat.user.pojo.po.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author 86180
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.vanky.chat.user.pojo.po.UserRole
 */
 public interface UserRoleMapper extends BaseMapper<UserRole> {
+
+    UserRole selectByUserId(@Param("userId") Long userId);
 
 }
 

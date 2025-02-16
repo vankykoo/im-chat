@@ -5,7 +5,6 @@ import com.vanky.chat.server.processor.LoginMsgProcessor;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateEvent;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -19,20 +18,12 @@ public class ServerMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
     private ServerMsgHandler serverMsgHandler;
 
     @Resource
-    private HeatBeatServerHandler heatBeatServerHandler;
-
-    @Resource
     private LoginMsgProcessor loginMsgProcessor;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg instanceof BaseMsgProto.BaseMsg) {
-            BaseMsgProto.BaseMsg baseMsg = (BaseMsgProto.BaseMsg) msg;
-            serverMsgHandler.handle(ctx, baseMsg);
-        } else if (msg instanceof String) {
-            String baseMsg = (String) msg;
-            heatBeatServerHandler.handle(ctx, baseMsg);
-        }
+        BaseMsgProto.BaseMsg baseMsg = (BaseMsgProto.BaseMsg) msg;
+        serverMsgHandler.handle(ctx, baseMsg);
     }
 
     @Override

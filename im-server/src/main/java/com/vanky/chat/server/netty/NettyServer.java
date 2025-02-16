@@ -1,5 +1,6 @@
 package com.vanky.chat.server.netty;
 
+import com.vanky.chat.common.protobuf.BaseMsgProto;
 import com.vanky.chat.server.handler.ServerMultiProtocolDecoder;
 import com.vanky.chat.server.handler.ServerMultiProtocolEncoder;
 import com.vanky.chat.server.handler.ServerMultiProtocolHandler;
@@ -11,6 +12,10 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.timeout.IdleStateHandler;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +34,12 @@ public class NettyServer {
 
     @Resource
     private ServerMultiProtocolHandler serverMultiProtocolHandler;
+
+    @Resource
+    private ProtobufEncoder protobufEncoder;
+
+    @Resource
+    private ProtobufVarint32LengthFieldPrepender protobufVarint32LengthFieldPrepender;
 
     @Value("${netty-server.port}")
     private int port;
@@ -54,11 +65,13 @@ public class NettyServer {
                              */
                             pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.MINUTES));
                             //解码器
-                            pipeline.addLast("serverMultiProtocolDecoder", new ServerMultiProtocolDecoder());
+                            pipeline.addLast(new ProtobufVarint32FrameDecoder());
+                            pipeline.addLast(new ProtobufDecoder(BaseMsgProto.BaseMsg.getDefaultInstance()));
                             //处理器
                             pipeline.addLast("serverMultiProtocolHandler", serverMultiProtocolHandler);
                             //编码器
-                            pipeline.addLast("serverMultiProtocolEncoder", new ServerMultiProtocolEncoder());
+                            pipeline.addLast(protobufVarint32LengthFieldPrepender);
+                            pipeline.addLast(protobufEncoder);
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(port).sync();

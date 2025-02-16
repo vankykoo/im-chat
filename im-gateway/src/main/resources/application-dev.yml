@@ -70,7 +70,7 @@ spring:
 
 im:
   token-secret: ${IM_TOKEN_SECRET}
-  skip-paths: /auth/login, /auth/oauth/login, /auth/oauth/to_login, /auth/oauth/gitee/login, /oauth2/authorization/gitee, /user/register
+  skip-paths: /auth/login, /auth/oauth/login, /auth/oauth/to_login, /auth/oauth/gitee/login, /oauth2/authorization/gitee, /user/register, /user/relation/addFriend, /server/group/joinGroup, /server/group/createGroup
 
 # springdoc-openapi项目配置
 springdoc:

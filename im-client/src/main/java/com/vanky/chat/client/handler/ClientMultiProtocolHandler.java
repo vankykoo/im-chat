@@ -1,6 +1,7 @@
 package com.vanky.chat.client.handler;
 
 import com.vanky.chat.client.channel.UserChannelMap;
+import com.vanky.chat.client.utils.MsgGenerator;
 import com.vanky.chat.client.utils.SendMsgUtil;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
 import io.netty.channel.ChannelHandler;
@@ -20,21 +21,24 @@ public class ClientMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
     @Resource
     private ClientMsgHandler clientMsgHandler;
 
-    @Resource
-    private HeatBeatClientHandler heatBeatClientHandler;
+    //@Resource
+    //private HeatBeatClientHandler heatBeatClientHandler;
 
     @Resource
     private ReconnectHandler reconnectHandler;
 
+    @Resource
+    private MsgGenerator msgGenerator;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg instanceof BaseMsgProto.BaseMsg) {
+        //if (msg instanceof BaseMsgProto.BaseMsg) {
             BaseMsgProto.BaseMsg baseMsg = (BaseMsgProto.BaseMsg) msg;
             clientMsgHandler.handle(ctx, baseMsg);
-        } else if (msg instanceof String) {
-            String baseMsg = (String) msg;
-            heatBeatClientHandler.handle(ctx, baseMsg);
-        }
+        //} else if (msg instanceof String) {
+        //    String baseMsg = (String) msg;
+        //    heatBeatClientHandler.handle(ctx, baseMsg);
+        //}
     }
 
     @Override
@@ -43,7 +47,9 @@ public class ClientMultiProtocolHandler extends SimpleChannelInboundHandler<Obje
             IdleStateEvent e = (IdleStateEvent) evt;
             switch (e.state()) {
                 case WRITER_IDLE:
-                    SendMsgUtil.sendMsg((NioSocketChannel)ctx.channel(), "ping");
+                    // 构建 ping 消息
+                    BaseMsgProto.BaseMsg baseMsg = msgGenerator.generatePingMsg();
+                    SendMsgUtil.sendMsg((NioSocketChannel)ctx.channel(), baseMsg);
                     break;
                 case READER_IDLE:
                     //断线重连

@@ -8,7 +8,6 @@ import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.exception.MyException;
 import com.vanky.chat.common.feign.leafFeign.IdGeneratorFeignClient;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
-import com.vanky.chat.common.utils.CommonConverter;
 import com.vanky.chat.common.utils.MsgEncryptUtil;
 import com.vanky.chat.common.utils.RedisUtil;
 import com.vanky.chat.server.pojo.BaseMsg;
@@ -17,7 +16,6 @@ import com.vanky.chat.server.service.GroupMsgService;
 import com.vanky.chat.server.service.GroupUserService;
 import com.vanky.chat.server.utils.MsgGenerator;
 import com.vanky.chat.server.utils.SendMsgUtil;
-import com.vanky.chat.server.utils.WaitAckUtil;
 import io.netty.channel.Channel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +34,6 @@ public class GroupMsgProcessor {
 
     @Resource
     private GroupMsgService groupMsgService;
-
-    @Resource
-    private WaitAckUtil waitAckUtil;
 
     @Resource
     private IdGeneratorFeignClient idGeneratorFeignClient;

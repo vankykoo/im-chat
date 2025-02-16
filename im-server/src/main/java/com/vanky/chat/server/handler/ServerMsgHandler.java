@@ -1,6 +1,5 @@
 package com.vanky.chat.server.handler;
 
-import com.google.protobuf.ByteString;
 import com.vanky.chat.common.cache.ReceivedMsgCache;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.protobuf.BaseMsgProto;
@@ -39,6 +38,9 @@ public class ServerMsgHandler{
     @Resource
     private AckMsgProcessor ackMsgProcessor;
 
+    @Resource
+    private HeatBeatServerHandler heatBeatServerHandler;
+
     //@Override
     protected void handle(ChannelHandlerContext ctx, BaseMsgProto.BaseMsg msg) throws Exception {
         int msgType = msg.getMsgType();
@@ -70,6 +72,10 @@ public class ServerMsgHandler{
             case 2:
                 //ack消息
                 ackMsgProcessor.processAckMsg(msg);
+                break;
+            case 3:
+                // ping 心跳信息
+                heatBeatServerHandler.handle(ctx);
                 break;
             case 5:
                 //服务端收到转发消息

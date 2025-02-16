@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class HeatBeatServerHandler{
-    protected void handle(ChannelHandlerContext ctx, String msg){
-        if ("ping".equals(msg)) {
-            log.info("收到客户端的心跳包 ping");
-            ctx.channel().writeAndFlush("pong");
-        }
+    protected void handle(ChannelHandlerContext ctx){
+        log.info("收到客户端的心跳包 ping");
+        ctx.channel().writeAndFlush("pong");
     }
 }

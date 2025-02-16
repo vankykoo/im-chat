@@ -53,7 +53,7 @@ public class BaseMsgServiceImpl extends ServiceImpl<BaseMsgMapper, BaseMsg>
     @Override
     public BaseMsg getBaseMsgByUniqueId(Long uniqueId) {
         LambdaQueryWrapper<BaseMsg> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(BaseMsg::getUniqueId, uniqueId);
+        wrapper.eq(BaseMsg::getId, uniqueId);
 
         return this.getOne(wrapper);
     }
@@ -61,7 +61,7 @@ public class BaseMsgServiceImpl extends ServiceImpl<BaseMsgMapper, BaseMsg>
     @Override
     public void setMsgHasReadByUniqueId(Long uniqueId) {
         LambdaQueryWrapper<BaseMsg> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(BaseMsg::getUniqueId, uniqueId);
+        wrapper.eq(BaseMsg::getId, uniqueId);
 
         BaseMsg baseMsg = BaseMsg.builder()
                 .status(TypeEnum.MsgStatus.HAS_READ.getValue())
@@ -83,7 +83,7 @@ public class BaseMsgServiceImpl extends ServiceImpl<BaseMsgMapper, BaseMsg>
     @Override
     public boolean isMsgExisted(Long uniqueId) {
         LambdaQueryWrapper<BaseMsg> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(BaseMsg::getUniqueId, uniqueId);
+        wrapper.eq(BaseMsg::getId, uniqueId);
 
         return this.exists(wrapper);
     }

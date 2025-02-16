@@ -111,4 +111,35 @@ public class RedisUtil {
     public static void hdel(String hashKey, Collection<String> keys){
         redisTemplate.opsForHash().delete(hashKey, keys.toArray());
     }
+
+    /**
+     * List 左 put
+     * @param key
+     * @param value
+     * @param <T>
+     */
+    public static <T> void lput(String key, T value){
+        redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    /**
+     * List 右 get
+     * @param key
+     * @param tClass
+     * @return
+     * @param <T>
+     */
+    public static <T> T lget(String key, Class<T> tClass){
+        return toOneBean(redisTemplate.opsForList().rightPop(key), tClass);
+    }
+
+    /**
+     * List 的 长度
+     * @param key
+     * @return
+     */
+    public static Long lLength(String key){
+        return redisTemplate.opsForList().size(key);
+    }
+
 }

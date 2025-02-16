@@ -4,9 +4,11 @@ import com.vanky.chat.client.netty.NettyClient;
 import com.vanky.chat.client.channel.UserChannelMap;
 import com.vanky.chat.client.processor.LoginMsgProcessor;
 import com.vanky.chat.common.ApplicationContext;
+import com.vanky.chat.common.bo.ImUserBo;
 import com.vanky.chat.common.cache.OnlineCache;
 import com.vanky.chat.common.constant.TypeEnum;
 import com.vanky.chat.common.exception.MyException;
+import com.vanky.chat.common.feign.userFeign.ImUserFeignClient;
 import com.vanky.chat.common.feign.userFeign.RelationFeignClient;
 import com.vanky.chat.common.response.Result;
 import com.vanky.chat.common.utils.RedisUtil;
@@ -38,6 +40,19 @@ public class UserLoginController {
 
     @Resource
     private RelationFeignClient relationFeignClient;
+
+    @Resource
+    private ImUserFeignClient imUserFeignClient;
+
+    @GetMapping("/connectTest")
+    public void connectTest(){
+        for (int i = 0; i < 100; i++) {
+            Result<ImUserBo> result = imUserFeignClient.getUserByUserName("uu-" + i);
+            ImUserBo userBo = result.getData();
+
+            nettyClient.connect(null, null, userBo.getUserId());
+        }
+    }
 
     @GetMapping ("/connect")
     @Operation(summary = "用户登录")

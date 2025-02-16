@@ -10,4 +10,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserRoleService extends IService<UserRole> {
 
+    /**
+     * 新增/更新用户权限
+     * @param userId
+     * @param roleKey
+     */
+    void updateUserRole(Long userId, long roleKey);
+
 }
