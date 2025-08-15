@@ -106,8 +106,6 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser>
             DHPrivateKeyBO dhPrivateKeyBO = new DHPrivateKeyBO(privateKey.getX(), privateKey.getParams().getP(), privateKey.getParams().getG());
             RedisUtil.put(privateKeyCache, dhPrivateKeyBO);
 
-
-
             log.info("用户注册成功：{} ---> {}", user.getUserId(), user.getUsername());
         } catch (Exception e) {
             throw new RuntimeException(e);

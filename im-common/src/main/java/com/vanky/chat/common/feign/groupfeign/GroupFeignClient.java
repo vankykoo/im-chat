@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create 2024/4/23 21:28
  */
 //@FeignClient(value = "im-server")
-@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
+@FeignClient(name = "localhost:8088", configuration = FeignRequestInterceptor.class)
 public interface GroupFeignClient {
     @GetMapping("/server/group/getPublicKey")
     Result<String> getPublicKey(@RequestParam("groupId") Long groupId);

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @create 2024/5/16 20:06
  */
 //@FeignClient(value = "im-auth")
-@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
+@FeignClient(name = "localhost:8088", configuration = FeignRequestInterceptor.class)
 public interface AuthFeignClient {
 
     @GetMapping(value = "/auth/generateAccessToken")

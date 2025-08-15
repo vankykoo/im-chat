@@ -42,13 +42,13 @@ public class MsgGenerator {
 
     public BaseMsgProto.BaseMsg generatePrivateMsg(PrivateMsgBo privateMsgBo){
         BaseMsgProto.BaseMsg.Builder builder = BaseMsgProto.BaseMsg.newBuilder();
-
+        Long uniqueId = idGeneratorFeignClient.nextId().getData();
         //顺序id生成
-        builder.setId(idGeneratorFeignClient.nextId().getData())
+        builder.setId(uniqueId)
                 .setChatType(TypeEnum.ChatType.PRIVATE_CHAT.getValue())
                 .setContent(privateMsgBo.getContent())
                 //唯一id生成
-                //.setUniqueId(idGeneratorFeignClient.nextId().getData())
+                .setUniqueId(uniqueId)
                 .setFromUserId(privateMsgBo.getFromUserId())
                 .setToUserId(privateMsgBo.getToUserId())
                 .setCreateTime(System.currentTimeMillis())

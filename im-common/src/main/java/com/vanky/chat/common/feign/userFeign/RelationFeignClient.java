@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2024/5/21 17:14
  */
 //@FeignClient(value = "im-user")
-@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
+@FeignClient(name = "localhost:8088", configuration = FeignRequestInterceptor.class)
 public interface RelationFeignClient {
 
     /**

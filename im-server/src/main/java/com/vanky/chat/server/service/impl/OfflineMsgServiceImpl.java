@@ -66,7 +66,7 @@ public class OfflineMsgServiceImpl extends ServiceImpl<OfflineMsgMapper, Offline
             int count = offlineMsgMapper.getOfflineMsgCountOfOne(id, userId);
             //最后一条消息
             OfflineMsg lastMsg = offlineMsgMapper.getLastOfflineMsgOfOne(id, userId);
-            BaseMsg baseMsg = baseMsgMapper.selectByUniqueId(lastMsg.getUniqueId());
+            BaseMsg baseMsg = baseMsgMapper.selectByUniqueId(lastMsg.getId());
             //第一条消息
             OfflineMsg firstMsg = offlineMsgMapper.getFirstOfflineMsgOfOne(id, userId);
 

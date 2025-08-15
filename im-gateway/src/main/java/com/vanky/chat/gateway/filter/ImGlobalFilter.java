@@ -106,6 +106,9 @@ public class ImGlobalFilter implements GlobalFilter, Ordered {
         if ("vk_feign_req".equals(token)){
             log.info("feign 请求，直接放行！");
             return true;
+        } else if ("INNER_USER".equals(token)) {
+            log.info("内部用户请求，直接放行！");
+            return true;
         }
 
         return false;

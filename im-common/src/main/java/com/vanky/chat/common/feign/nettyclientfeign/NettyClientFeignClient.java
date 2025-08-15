@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create 2024/5/11 16:23
  */
 //@FeignClient(value = "im-client")
-@FeignClient(name = "192.168.200.134:80", configuration = FeignRequestInterceptor.class)
+@FeignClient(name = "localhost:8088", configuration = FeignRequestInterceptor.class)
 public interface NettyClientFeignClient {
 
     @GetMapping("/client/connect")

@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="441e97c8-f21e-4e36-86c8-5a945aa03459" name="更改" comment="好友关系">
+      <change beforePath="$PROJECT_DIR$/im-client/src/main/java/com/vanky/chat/client/utils/MsgGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-client/src/main/java/com/vanky/chat/client/utils/MsgGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/config/MyRedissonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/config/MyRedissonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/authFeign/AuthFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/authFeign/AuthFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/groupfeign/GroupFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/groupfeign/GroupFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/leafFeign/IdGeneratorFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/leafFeign/IdGeneratorFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/nettyclientfeign/NettyClientFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/nettyclientfeign/NettyClientFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/ImUserFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/ImUserFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/PermissionFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/PermissionFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/RelationFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-common/src/main/java/com/vanky/chat/common/feign/userFeign/RelationFeignClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-gateway/src/main/java/com/vanky/chat/gateway/filter/ImGlobalFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-gateway/src/main/java/com/vanky/chat/gateway/filter/ImGlobalFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-server/src/main/java/com/vanky/chat/server/service/impl/OfflineMsgServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-server/src/main/java/com/vanky/chat/server/service/impl/OfflineMsgServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/im-user/src/main/java/com/vanky/chat/user/service/impl/ImUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/im-user/src/main/java/com/vanky/chat/user/service/impl/ImUserServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="package-info" />
+        <option value="HTML File" />
+        <option value="MyBatis的sql映射文件" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vankykoo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vankykoo/im-chat.git&quot;,
+    &quot;accountId&quot;: &quot;a68bf334-9987-409b-b1e6-37957a3ed7ab&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/io/jsonwebtoken/jjwt/0.9.1/jjwt-0.9.1-sources.jar!/io/jsonwebtoken/Claims.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.1.100.Final/netty-common-4.1.100.Final-sources.jar!/io/netty/util/concurrent/Future.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.100.Final/netty-transport-4.1.100.Final-sources.jar!/io/netty/bootstrap/Bootstrap.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.100.Final/netty-transport-4.1.100.Final-sources.jar!/io/netty/channel/ChannelFuture.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/10.1.15/tomcat-embed-core-10.1.15-sources.jar!/org/apache/catalina/authenticator/AuthenticatorBase.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/6.1.5/spring-security-core-6.1.5-sources.jar!/org/springframework/security/authorization/AuthenticatedReactiveAuthorizationManager.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/6.1.5/spring-security-core-6.1.5-sources.jar!/org/springframework/security/authorization/ReactiveAuthorizationManager.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2eBBB0limcb80lNQXCCrhabEDCL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;GenProtobuf.quickGen&quot;: &quot;Java&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/IDEAProject/im-plus&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;bd9ffd2ba92fa7c5cd68814d8dd055ad&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\IDEAProject\im-chat\im-server\src\main\java\com\vanky\chat\server\handler" />
+      <recent name="E:\IDEAProject\im-chat\im-client\src\main\java\com\vanky\chat\client\handler" />
+      <recent name="E:\IDEAProject\im-chat\im-file\src\main\resources" />
+      <recent name="E:\IDEAProject\im-chat\im-auth\src\main\java\com\vanky\chat\auth" />
+      <recent name="E:\IDEAProject\im-chat\im-auth\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\IDEAProject\im-chat\im-server\src\main\java\com\vanky\chat\server" />
+      <recent name="E:\IDEAProject\im-chat\im-server\src\main\resources" />
+      <recent name="E:\IDEAProject\im-chat\im-server\src\test" />
+      <recent name="E:\IDEAProject\im-chat\im-server\src\main\resources\template" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.vanky.chat.server.protobuf" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.vanky.chat.server.handler" />
+      <recent name="com.vanky.chat.client.handler" />
+      <recent name="com.vanky.chat.common.filter" />
+      <recent name="com.vanky.chat.auth.pojo.bo" />
+      <recent name="com.vanky.chat.auth.utils" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ServerApplication">
+    <configuration name="JoinGroupTest.joinGroupTest1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="im-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vanky.chat.server.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vanky.chat.server.service" />
+      <option name="MAIN_CLASS_NAME" value="com.vanky.chat.server.service.JoinGroupTest" />
+      <option name="METHOD_NAME" value="joinGroupTest1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRegister.testUserRegister" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="im-user" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vanky.chat.user.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vanky.chat.user.service" />
+      <option name="MAIN_CLASS_NAME" value="com.vanky.chat.user.service.TestRegister" />
+      <option name="METHOD_NAME" value="testUserRegister" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserLoginTest.userLoginTest1 (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="im-auth" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vanky.chat.auth.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vanky.chat.auth.service" />
+      <option name="MAIN_CLASS_NAME" value="com.vanky.chat.auth.service.UserLoginTest" />
+      <option name="METHOD_NAME" value="userLoginTest1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserLoginTest.userLoginTest1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="im-client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vanky.chat.client.netty.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vanky.chat.client.netty" />
+      <option name="MAIN_CLASS_NAME" value="com.vanky.chat.client.netty.UserLoginTest" />
+      <option name="METHOD_NAME" value="userLoginTest1" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-auth" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.auth.AuthApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-client" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.client.ClientApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.gateway.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ImLeafApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-leaf" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.ImLeafApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MqApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-mq" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.MqApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="im-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.server.ServerApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vanky.chat.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="im-user" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.vanky.chat.user.UserApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="lua.app" factoryName="Lua Application">
+      <option name="program" value="lua.exe" />
+      <option name="file" value="" />
+      <option name="workingDir" value="$PROJECT_DIR$/src/main/java" />
+      <option name="debuggerType" value="1" />
+      <option name="params" value="" />
+      <option name="charset" value="UTF-8" />
+      <option name="showConsole" value="true" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.JoinGroupTest.joinGroupTest1" />
+      <item itemvalue="JUnit.TestRegister.testUserRegister" />
+      <item itemvalue="JUnit.UserLoginTest.userLoginTest1" />
+      <item itemvalue="JUnit.UserLoginTest.userLoginTest1 (1)" />
+      <item itemvalue="Spring Boot.MqApplication" />
+      <item itemvalue="Spring Boot.AuthApplication" />
+      <item itemvalue="Spring Boot.ClientApplication" />
+      <item itemvalue="Spring Boot.ImLeafApplication" />
+      <item itemvalue="Spring Boot.GatewayApplication" />
+      <item itemvalue="Spring Boot.UserApplication" />
+      <item itemvalue="Spring Boot.ServerApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ServerApplication" />
+        <item itemvalue="JUnit.JoinGroupTest.joinGroupTest1" />
+        <item itemvalue="JUnit.TestRegister.testUserRegister" />
+        <item itemvalue="JUnit.UserLoginTest.userLoginTest1" />
+        <item itemvalue="JUnit.UserLoginTest.userLoginTest1 (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="441e97c8-f21e-4e36-86c8-5a945aa03459" name="更改" comment="" />
+      <created>1711367954470</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711367954470</updated>
+      <workItem from="1711367955535" duration="8875000" />
+      <workItem from="1711435844634" duration="17796000" />
+      <workItem from="1711525438316" duration="10210000" />
+      <workItem from="1711631175904" duration="6365000" />
+      <workItem from="1711676875104" duration="6508000" />
+      <workItem from="1711698236292" duration="103000" />
+      <workItem from="1711698347687" duration="1766000" />
+      <workItem from="1711700130908" duration="9593000" />
+      <workItem from="1711767390129" duration="3303000" />
+      <workItem from="1711782809593" duration="10549000" />
+      <workItem from="1711803536621" duration="203000" />
+      <workItem from="1711803749215" duration="4600000" />
+      <workItem from="1711852729021" duration="4597000" />
+      <workItem from="1711871183919" duration="14262000" />
+      <workItem from="1711970548134" duration="9299000" />
+      <workItem from="1711979876319" duration="2928000" />
+      <workItem from="1712045362390" duration="9940000" />
+      <workItem from="1712562435216" duration="12490000" />
+      <workItem from="1712631567024" duration="4271000" />
+      <workItem from="1712645715330" duration="16772000" />
+      <workItem from="1712750176419" duration="9546000" />
+      <workItem from="1712839067195" duration="536000" />
+      <workItem from="1712888914028" duration="6034000" />
+      <workItem from="1712905748819" duration="548000" />
+      <workItem from="1712906306851" duration="8632000" />
+      <workItem from="1712972532289" duration="8244000" />
+      <workItem from="1712994824833" duration="4674000" />
+      <workItem from="1713012004262" duration="10390000" />
+      <workItem from="1713059022175" duration="6292000" />
+      <workItem from="1713079256461" duration="1156000" />
+      <workItem from="1713080425921" duration="16056000" />
+      <workItem from="1713150250052" duration="3367000" />
+      <workItem from="1713167083323" duration="11241000" />
+      <workItem from="1713236106128" duration="915000" />
+      <workItem from="1713237199070" duration="1622000" />
+      <workItem from="1713250435611" duration="3037000" />
+      <workItem from="1713268232219" duration="7266000" />
+      <workItem from="1713344217186" duration="11109000" />
+      <workItem from="1713444470784" duration="6848000" />
+      <workItem from="1713493950797" duration="3955000" />
+      <workItem from="1713513415879" duration="12857000" />
+      <workItem from="1713580874314" duration="5339000" />
+      <workItem from="1713600050499" duration="5086000" />
+      <workItem from="1713613992108" duration="8312000" />
+      <workItem from="1713685934311" duration="13777000" />
+      <workItem from="1713790036537" duration="3545000" />
+      <workItem from="1713855386190" duration="6961000" />
+      <workItem from="1713864312109" duration="270000" />
+      <workItem from="1713873909523" duration="31000" />
+      <workItem from="1713873958393" duration="9056000" />
+      <workItem from="1713942170907" duration="807000" />
+      <workItem from="1713943008181" duration="3492000" />
+      <workItem from="1713960085888" duration="6991000" />
+      <workItem from="1714014513780" duration="1532000" />
+      <workItem from="1714034791048" duration="5545000" />
+      <workItem from="1714100544678" duration="2479000" />
+      <workItem from="1714140262763" duration="1815000" />
+      <workItem from="1714202777364" duration="17959000" />
+      <workItem from="1714272098408" duration="3858000" />
+      <workItem from="1714306992918" duration="6044000" />
+      <workItem from="1714360724697" duration="2486000" />
+      <workItem from="1714379137732" duration="4496000" />
+      <workItem from="1714476768248" duration="2632000" />
+      <workItem from="1714541381989" duration="11464000" />
+      <workItem from="1714652995374" duration="3841000" />
+      <workItem from="1714911066196" duration="9374000" />
+      <workItem from="1714965110117" duration="3320000" />
+      <workItem from="1714984120472" duration="8749000" />
+      <workItem from="1715005047740" duration="1215000" />
+      <workItem from="1715084145050" duration="1372000" />
+      <workItem from="1715263800603" duration="182000" />
+      <workItem from="1715309337417" duration="1762000" />
+      <workItem from="1715339412258" duration="12680000" />
+      <workItem from="1715415522165" duration="3915000" />
+      <workItem from="1715436115129" duration="1761000" />
+      <workItem from="1715515345862" duration="10755000" />
+      <workItem from="1715602455180" duration="9934000" />
+      <workItem from="1715740511422" duration="2099000" />
+      <workItem from="1715759625789" duration="9658000" />
+      <workItem from="1715843844599" duration="7479000" />
+      <workItem from="1715860966939" duration="6965000" />
+      <workItem from="1715929658723" duration="5350000" />
+      <workItem from="1715953147694" duration="3799000" />
+      <workItem from="1716028033927" duration="3615000" />
+      <workItem from="1716031670012" duration="1000" />
+      <workItem from="1716034809983" duration="7128000" />
+      <workItem from="1716101827321" duration="3571000" />
+      <workItem from="1716121318489" duration="5994000" />
+      <workItem from="1716192348691" duration="13747000" />
+      <workItem from="1716213800488" duration="1117000" />
+      <workItem from="1716280111846" duration="4389000" />
+      <workItem from="1716543530450" duration="5780000" />
+      <workItem from="1716604024189" duration="5232000" />
+      <workItem from="1716643204201" duration="4883000" />
+      <workItem from="1716690156731" duration="7451000" />
+      <workItem from="1716711716269" duration="12976000" />
+      <workItem from="1716733521381" duration="388000" />
+      <workItem from="1716795326536" duration="16135000" />
+      <workItem from="1716897180934" duration="10336000" />
+      <workItem from="1716965507935" duration="22576000" />
+      <workItem from="1717071006006" duration="5032000" />
+      <workItem from="1717161861953" duration="677000" />
+      <workItem from="1717249182331" duration="36000" />
+      <workItem from="1720505588952" duration="4621000" />
+      <workItem from="1724663703955" duration="8089000" />
+      <workItem from="1724762419359" duration="2757000" />
+      <workItem from="1724852037265" duration="1782000" />
+      <workItem from="1724933321526" duration="3443000" />
+      <workItem from="1725071123967" duration="1057000" />
+      <workItem from="1725157985083" duration="1637000" />
+      <workItem from="1725279602016" duration="4633000" />
+      <workItem from="1725507268375" duration="1394000" />
+      <workItem from="1725616542943" duration="42000" />
+      <workItem from="1725676035887" duration="3683000" />
+      <workItem from="1726144883354" duration="4550000" />
+      <workItem from="1726216517695" duration="433000" />
+      <workItem from="1726230804066" duration="5443000" />
+      <workItem from="1726283174122" duration="2480000" />
+      <workItem from="1726649788730" duration="4164000" />
+      <workItem from="1726735081036" duration="8322000" />
+      <workItem from="1726885046281" duration="6315000" />
+      <workItem from="1726903750989" duration="5699000" />
+      <workItem from="1726919777614" duration="4256000" />
+      <workItem from="1726973805901" duration="2630000" />
+      <workItem from="1726990772526" duration="13067000" />
+      <workItem from="1727055885966" duration="5382000" />
+      <workItem from="1727097352234" duration="2742000" />
+      <workItem from="1727146713767" duration="100000" />
+      <workItem from="1728909696174" duration="720000" />
+      <workItem from="1728996454226" duration="550000" />
+      <workItem from="1728997247396" duration="2848000" />
+      <workItem from="1729080255866" duration="5596000" />
+      <workItem from="1729258239042" duration="3198000" />
+      <workItem from="1730097705065" duration="18832000" />
+      <workItem from="1730184610348" duration="5199000" />
+      <workItem from="1730279440985" duration="429000" />
+      <workItem from="1730291019965" duration="24000" />
+      <workItem from="1730293627989" duration="1793000" />
+      <workItem from="1730530185060" duration="6748000" />
+      <workItem from="1730552002937" duration="5872000" />
+      <workItem from="1730613529657" duration="12099000" />
+      <workItem from="1730723246019" duration="594000" />
+      <workItem from="1732019956114" duration="41000" />
+      <workItem from="1734875473024" duration="624000" />
+      <workItem from="1735304590846" duration="49000" />
+      <workItem from="1736521066849" duration="2014000" />
+      <workItem from="1739679497428" duration="11049000" />
+      <workItem from="1740292064834" duration="5563000" />
+      <workItem from="1740580587201" duration="710000" />
+      <workItem from="1740742161411" duration="6372000" />
+      <workItem from="1740805014873" duration="6584000" />
+      <workItem from="1740836122782" duration="1249000" />
+      <workItem from="1740920115759" duration="5045000" />
+      <workItem from="1740980582558" duration="7023000" />
+      <workItem from="1741067596314" duration="1895000" />
+      <workItem from="1741135770869" duration="1740000" />
+      <workItem from="1741340683486" duration="695000" />
+      <workItem from="1741530983225" duration="33000" />
+      <workItem from="1745324077641" duration="1275000" />
+      <workItem from="1746625232386" duration="880000" />
+      <workItem from="1746626156890" duration="2392000" />
+      <workItem from="1746712788916" duration="2420000" />
+      <workItem from="1747146098555" duration="1805000" />
+      <workItem from="1747459869605" duration="3791000" />
+      <workItem from="1748956030590" duration="1812000" />
+    </task>
+    <task id="LOCAL-00001" summary="提交项目">
+      <option name="closed" value="true" />
+      <created>1716125633625</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716125633625</updated>
+    </task>
+    <task id="LOCAL-00002" summary="5.20">
+      <option name="closed" value="true" />
+      <created>1716213882065</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716213882065</updated>
+    </task>
+    <task id="LOCAL-00003" summary="服务接收到消息时，需要判断用户之间是否为好友，用户是否在群聊内；添加好友功能">
+      <option name="closed" value="true" />
+      <created>1716284040425</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716284040425</updated>
+    </task>
+    <task id="LOCAL-00004" summary="更正 feign 请求地址，统一请求到 nginx 中">
+      <option name="closed" value="true" />
+      <created>1716561384675</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716561384675</updated>
+    </task>
+    <task id="LOCAL-00005" summary="添加心跳检测功能，ping/pong">
+      <option name="closed" value="true" />
+      <created>1716733398342</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716733398342</updated>
+    </task>
+    <task id="LOCAL-00006" summary="解决protobuf编解码报错">
+      <option name="closed" value="true" />
+      <created>1716994027529</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716994027529</updated>
+    </task>
+    <task id="LOCAL-00007" summary="解决protobuf编解码报错">
+      <option name="closed" value="true" />
+      <created>1716995547755</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716995547755</updated>
+    </task>
+    <task id="LOCAL-00008" summary="修改代码">
+      <option name="closed" value="true" />
+      <created>1717080428087</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1717080428088</updated>
+    </task>
+    <task id="LOCAL-00009" summary="1. 添加查询历史记录功能&#10;2. 客户端连接服务端后，马上给服务端发送登录消息">
+      <option name="closed" value="true" />
+      <created>1726975953904</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1726975953904</updated>
+    </task>
+    <task id="LOCAL-00010" summary="1. 用户登录后，获取到好友的在线状态">
+      <option name="closed" value="true" />
+      <created>1727013571688</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727013571688</updated>
+    </task>
+    <task id="LOCAL-00011" summary="用户在线状态改变时，推送给在线好友">
+      <option name="closed" value="true" />
+      <created>1727098581173</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727098581173</updated>
+    </task>
+    <task id="LOCAL-00012" summary="记录登录日志">
+      <option name="closed" value="true" />
+      <created>1728910402698</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728910402698</updated>
+    </task>
+    <task id="LOCAL-00013" summary="好友关系">
+      <option name="closed" value="true" />
+      <created>1739679740582</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1739679740582</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="提交项目" />
+    <MESSAGE value="5.20" />
+    <MESSAGE value="服务接收到消息时，需要判断用户之间是否为好友，用户是否在群聊内；添加好友功能" />
+    <MESSAGE value="更正 feign 请求地址，统一请求到 nginx 中" />
+    <MESSAGE value="添加心跳检测功能，ping/pong" />
+    <MESSAGE value="解决protobuf编解码报错" />
+    <MESSAGE value="修改代码" />
+    <MESSAGE value="1. 添加查询历史记录功能&#10;2. 客户端连接服务端后，马上给服务端发送登录消息" />
+    <MESSAGE value="1. 用户登录后，获取到好友的在线状态" />
+    <MESSAGE value="用户在线状态改变时，推送给在线好友" />
+    <MESSAGE value="记录登录日志" />
+    <MESSAGE value="好友关系" />
+    <option name="LAST_COMMIT_MESSAGE" value="好友关系" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="io.netty.channel.nio.NioEventLoop" memberName="gracefulShutdownStartTime" />
+        <PinnedItemInfo parentTag="reactor.core.publisher.MonoMapFuseable" memberName="optimizableOperator" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
